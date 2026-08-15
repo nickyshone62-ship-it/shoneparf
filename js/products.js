@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SHONE PARFUMERIE - PRODUCTS DATA (VANILLE EXALTANTE / VELVET ROSE)
+   SHONE PARFUMERIE - PRODUCTS & ZONES DATA (HARDCODED INITIAL CATALOG)
    ========================================================================== */
 
 const PRODUCTS_DATA = [
@@ -82,7 +82,7 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-8",
-    name: "Velvet Rose",
+    name: "Velvet Rose (Vanille Exaltante)",
     gender: "femme",
     genderLabel: "Femme",
     style: "Séduisant",
