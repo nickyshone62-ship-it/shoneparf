@@ -26,12 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Receipt Photo Confirmation Base64
   let rcPhotoBase64 = null;
 
-  // STRICT LOCALSTORAGE RESPECT
+  // SAFE PRODUCTS INITIALIZATION FOR VERCEL & LOCALSTORAGE
   let storedProductsRaw = localStorage.getItem('shone_products');
-  let allProducts = storedProductsRaw ? JSON.parse(storedProductsRaw) : [...PRODUCTS_DATA];
+  let parsedProducts = null;
+  try {
+    if (storedProductsRaw) parsedProducts = JSON.parse(storedProductsRaw);
+  } catch (e) {
+    parsedProducts = null;
+  }
 
-  // Save initial if first visit
-  if (!storedProductsRaw) {
+  let allProducts = (Array.isArray(parsedProducts) && parsedProducts.length > 0)
+    ? parsedProducts
+    : [...PRODUCTS_DATA];
+
+  // Save initial products if first visit or if empty array in localStorage
+  if (!storedProductsRaw || !Array.isArray(parsedProducts) || parsedProducts.length === 0) {
     localStorage.setItem('shone_products', JSON.stringify(allProducts));
   }
 
