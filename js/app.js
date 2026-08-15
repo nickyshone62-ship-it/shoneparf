@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v2.0_20260816_v2';
+  const CURRENT_APP_VERSION = 'v3.0_empty_catalog_custom';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
@@ -42,12 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     parsedProducts = null;
   }
 
-  let allProducts = (Array.isArray(parsedProducts) && parsedProducts.length > 0)
-    ? parsedProducts
-    : [...PRODUCTS_DATA];
+  let allProducts = Array.isArray(parsedProducts) ? parsedProducts : [...PRODUCTS_DATA];
 
-  // Save initial products if first visit or if empty array in localStorage
-  if (!storedProductsRaw || !Array.isArray(parsedProducts) || parsedProducts.length === 0) {
+  if (!storedProductsRaw || !Array.isArray(parsedProducts)) {
     localStorage.setItem('shone_products', JSON.stringify(allProducts));
   }
 
@@ -847,9 +844,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (productsToRender.length === 0) {
       productsGrid.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 60px 0; color: var(--text-muted);">
-          <i class="fas fa-search" style="font-size: 2.5rem; margin-bottom: 15px; color: var(--gold-primary);"></i>
-          <p>Aucun parfum ne correspond à cette recherche.</p>
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-gold);">
+          <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(212, 175, 55, 0.15); color: var(--gold-primary); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 16px auto;">
+            <i class="fas fa-bottle-droplet text-gold-gradient"></i>
+          </div>
+          <h3 style="font-family: var(--font-heading); color: var(--gold-light); font-size: 1.4rem; margin-bottom: 8px;">Catalogue Shone Parfumerie</h3>
+          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 20px auto; font-size: 0.95rem;">Le catalogue est prêt. Vous pouvez ajouter vos propres parfums directement depuis l'Espace Admin !</p>
+          <button class="btn btn-gold" onclick="switchView('admin')">
+            <i class="fas fa-plus-circle"></i> Accéder à l'Espace Admin pour Ajouter un Parfum
+          </button>
         </div>
       `;
       return;
