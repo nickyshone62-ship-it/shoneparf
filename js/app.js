@@ -26,6 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Receipt Photo Confirmation Base64
   let rcPhotoBase64 = null;
 
+  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
+  const CURRENT_APP_VERSION = 'v2.0_20260816_v2';
+  if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
+    localStorage.removeItem('shone_products');
+    localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
+  }
+
   // SAFE PRODUCTS INITIALIZATION FOR VERCEL & LOCALSTORAGE
   let storedProductsRaw = localStorage.getItem('shone_products');
   let parsedProducts = null;
