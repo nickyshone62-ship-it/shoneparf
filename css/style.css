@@ -1372,3 +1372,25 @@ h1, h2, h3, h4, .font-heading {
     grid-template-columns: 1fr;
   }
 }
+
+/* ANTI-OVERFLOW RESPONSIVE MOBILE FIX FOR USSD CODES */
+code {
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+  white-space: normal !important;
+  font-family: monospace;
+  font-size: clamp(0.85rem, 3.8vw, 1.1rem);
+  letter-spacing: 0.5px;
+}
+
+.modal-card {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+#pay-instructions-text {
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+  box-sizing: border-box;
+}
+

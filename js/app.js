@@ -469,13 +469,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPaymentMethod === 'orange') {
       const ussdCode = `*144*2*1*${ORANGE_NUMBER}*${totalAmount}#`;
       instrText.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 10px; word-break: break-all; overflow-wrap: anywhere;">
           <div><i class="fas fa-mobile-screen-button" style="color: #FF7900;"></i> <strong>Paiement Orange Money :</strong></div>
-          <div style="background: var(--bg-dark); padding: 14px; border-radius: var(--radius-sm); border: 1px solid #FF7900;">
+          <div style="background: var(--bg-dark); padding: 12px; border-radius: var(--radius-sm); border: 1px solid #FF7900; word-break: break-all;">
             <div style="font-size: 0.85rem; color: var(--text-muted);">Numéro Orange Money Shone : <strong>+226 ${ORANGE_NUMBER}</strong></div>
-            <div style="font-size: 1.15rem; font-weight: 800; color: #FF7900; margin-top: 4px;">Code USSD à composer : <code>${ussdCode}</code></div>
+            <div style="font-size: clamp(0.85rem, 3.8vw, 1.15rem); font-weight: 800; color: #FF7900; margin-top: 6px; word-break: break-all; overflow-wrap: anywhere;">
+              Code USSD à composer : <code style="background: rgba(255, 121, 0, 0.15); padding: 4px 8px; border-radius: 4px; font-family: monospace; word-break: break-all !important; display: inline-block;">${ussdCode}</code>
+            </div>
           </div>
-          <a href="tel:${encodeURIComponent(ussdCode)}" class="btn btn-gold" style="padding: 10px 16px; font-size: 0.9rem; width: 100%;">
+          <a href="tel:${encodeURIComponent(ussdCode)}" class="btn btn-gold" style="padding: 10px 14px; font-size: 0.85rem; width: 100%; white-space: normal; text-align: center;">
             <i class="fas fa-phone"></i> Lancer l'appel USSD Orange Money (*144*2*1*)
           </a>
         </div>
@@ -485,13 +487,15 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (currentPaymentMethod === 'moov') {
       const ussdCode = `*555*2*1*${MOOV_NUMBER}*${totalAmount}#`;
       instrText.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 10px; word-break: break-all; overflow-wrap: anywhere;">
           <div><i class="fas fa-mobile-retro" style="color: #005CA9;"></i> <strong>Paiement Moov Money :</strong></div>
-          <div style="background: var(--bg-dark); padding: 14px; border-radius: var(--radius-sm); border: 1px solid #005CA9;">
+          <div style="background: var(--bg-dark); padding: 12px; border-radius: var(--radius-sm); border: 1px solid #005CA9; word-break: break-all;">
             <div style="font-size: 0.85rem; color: var(--text-muted);">Numéro Moov Money Shone : <strong>+226 ${MOOV_NUMBER}</strong></div>
-            <div style="font-size: 1.15rem; font-weight: 800; color: #60A5FA; margin-top: 4px;">Code USSD à composer : <code>${ussdCode}</code></div>
+            <div style="font-size: clamp(0.85rem, 3.8vw, 1.15rem); font-weight: 800; color: #60A5FA; margin-top: 6px; word-break: break-all; overflow-wrap: anywhere;">
+              Code USSD à composer : <code style="background: rgba(0, 92, 169, 0.2); padding: 4px 8px; border-radius: 4px; font-family: monospace; word-break: break-all !important; display: inline-block;">${ussdCode}</code>
+            </div>
           </div>
-          <a href="tel:${encodeURIComponent(ussdCode)}" class="btn btn-gold" style="padding: 10px 16px; font-size: 0.9rem; width: 100%; background: #005CA9; color: #FFF;">
+          <a href="tel:${encodeURIComponent(ussdCode)}" class="btn btn-gold" style="padding: 10px 14px; font-size: 0.85rem; width: 100%; background: #005CA9; color: #FFF; white-space: normal; text-align: center;">
             <i class="fas fa-phone"></i> Lancer l'appel USSD Moov Money (*555*2*1*)
           </a>
         </div>
