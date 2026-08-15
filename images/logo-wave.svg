@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <rect width="200" height="200" rx="30" fill="#1DC3F2"/>
+  <!-- Wave Penguin Silhouette -->
+  <path d="M100 35 C75 35 60 55 60 90 C60 120 70 155 100 155 C130 155 140 120 140 90 C140 55 125 35 100 35 Z" fill="#0D2C54"/>
+  <path d="M100 65 C85 65 75 80 75 105 C75 125 85 140 100 140 C115 140 125 125 125 105 C125 80 115 65 100 65 Z" fill="#FFFFFF"/>
+  <polygon points="100,80 90,95 110,95" fill="#FF9900"/>
+  <text x="100" y="180" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="22" fill="#0D2C54" text-anchor="middle" letter-spacing="1">wave</text>
+</svg>
