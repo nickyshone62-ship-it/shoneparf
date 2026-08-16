@@ -90,6 +90,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/oud-nuclear.png",
     description: "La puissance absolue à l'état pur. Une alchimie parfaite à la fois florale, boisée et ambrée qui se suffit à elle-même. Un parfum d'une tenue phénoménale et d'un sillage envoûtant pour marquer les esprits sans effort."
+  },
+  {
+    id: "prod-9",
+    name: "Monark",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Frais",
+    price: 10000,
+    size: "100 ml",
+    image: "images/monark.png",
+    description: "Une véritable pépite plébiscitée pour sa tenue phénoménale (plus de 48 heures sur les vêtements). Un mélange équilibré de notes boisées, gourmandes et épicées qui résiste parfaitement à la chaleur sans jamais perdre en puissance. Une valeur sûre et un rapport qualité/prix imbattable."
   }
 ];
 
