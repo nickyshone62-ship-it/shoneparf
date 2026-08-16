@@ -3,6 +3,18 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
+  const CURRENT_APP_VERSION = 'v25.0_CLEAN_REBUILD_NO_OVERRIDE';
+  if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
+    localStorage.removeItem('shone_products');
+    localStorage.removeItem('shone_reviews');
+    localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
+  }
+
+  // ALWAYS LOAD FRESH PRODUCTS DATA DIRECTLY FROM PRODUCTS_DATA ARRAY
+  let allProducts = Array.isArray(PRODUCTS_DATA) ? [...PRODUCTS_DATA] : [];
+  localStorage.setItem('shone_products', JSON.stringify(allProducts));
+
   // Global State
   let cart = JSON.parse(localStorage.getItem('shone_cart')) || [];
   let currentGender = 'all';
@@ -25,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Receipt Photo Confirmation Base64
   let rcPhotoBase64 = null;
-
-
 
   // --------------------------------------------------------------------------
   // ULTRA-HD IMAGE ZOOM CONTROLLER (HD RAZOR SHARP LIGHTBOX)
@@ -77,23 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       adjustImageZoom(0.8);
     }
-  };  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v24.0_FORCE_FULL_CATALOG_HOMME';
-  if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
-    localStorage.removeItem('shone_products');
-    localStorage.removeItem('shone_reviews');
-    localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
-  }
-
-  // SAFE PRODUCTS INITIALIZATION FOR VERCEL & LOCALSTORAGE
-  let allProducts = [...PRODUCTS_DATA];
-  localStorage.setItem('shone_products', JSON.stringify(allProducts));
-
-  // Update Asad Bourbon / Velvet Rose image if present
-  const velvetIdx = allProducts.findIndex(p => p.name.toLowerCase().includes('velvet') || p.name.toLowerCase().includes('vanille') || p.name.toLowerCase().includes('asad'));
-  if (velvetIdx > -1 && !allProducts[velvetIdx].image.startsWith('data:image')) {
-    allProducts[velvetIdx].image = "images/asad-bourbon.png";
-  }
+  };
 
   let allZones = JSON.parse(localStorage.getItem('shone_zones')) || [...DELIVERY_ZONES_DATA];
   let allOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
