@@ -82,14 +82,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-8",
-    name: "Asad Bourbon (Vanille Exaltante)",
+    name: "Oud Nuclear",
     gender: "femme",
     genderLabel: "Femme",
     style: "Puissant",
     price: 12000,
     size: "100 ml",
-    image: "images/asad-bourbon.png",
-    description: "Une création captivante dominée par une vanille bourbon d'exception aux accents profonds de chocolat gourmand. Un parfum puissant, chaleureux, durable et incroyablement séduisant."
+    image: "images/oud-nuclear.png",
+    description: "La puissance absolue à l'état pur. Une alchimie parfaite à la fois florale, boisée et ambrée qui se suffit à elle-même. Un parfum d'une tenue phénoménale et d'un sillage envoûtant pour marquer les esprits sans effort."
   }
 ];
 

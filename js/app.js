@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v18.0_super_sharp_hd_zoom';
+  const CURRENT_APP_VERSION = 'v19.0_oud_nuclear_12k';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
