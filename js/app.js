@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v40.0_eclair_price_10000f';
+  const CURRENT_APP_VERSION = 'v41.0_full_rebuild_verified_all_17';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
