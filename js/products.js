@@ -159,13 +159,13 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-15",
-    name: "24K White",
+    name: "24K",
     gender: "homme",
     genderLabel: "Homme",
     style: "Doux",
     price: 5000,
     size: "100 ml",
-    image: "images/24k-white.png",
+    image: "images/24k.png",
     description: "Le rapport qualité/prix ultime de la parfumerie orientale. Des créations renommées pour leur tenue longue durée, leur puissance et leur sillage captivant. L'alliance parfaite entre luxe accessible, fraîcheur et intensité au quotidien."
   }
 ];
