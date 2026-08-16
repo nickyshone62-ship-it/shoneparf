@@ -27,14 +27,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-3",
-    name: "Elixir d'Or Solaire",
-    gender: "femme",
-    genderLabel: "Femme",
-    style: "Élégant",
-    price: 32000,
+    name: "Fiero Bleu Man",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Frais",
+    price: 10000,
     size: "100 ml",
-    image: "images/elixir-or.png",
-    description: "L'éclat d'un sillage raffiné mêlant jasmin impérial, bergamote d'Italie et bois précieux. Un équilibre parfait d'élégance et de distinction."
+    image: "images/fiero-bleu-man.png",
+    description: "La quintessence de la fraîcheur et de la propreté au quotidien. Un mariage réussi entre l'énergie pétillante d'agrumes (bergamote, mandarine) et la sophistication de Dior Sauvage & Bleu de Chanel. Léger, gourmand, sensuel et irrésistible à la maison comme au travail."
   },
   {
     id: "prod-4",
