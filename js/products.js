@@ -134,6 +134,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/marshmallow-blush.png",
     description: "Une gourmandise féminine irrésistible et câline. Une ouverture fruitée et pétillante de fraise et framboise, évoluant vers un cœur floral délicat, sur un fond de guimauve crémeuse et musc doux. Sucré, tendre, élégant et hautement addictif."
+  },
+  {
+    id: "prod-13",
+    name: "Unique",
+    gender: "femme",
+    genderLabel: "Femme",
+    style: "Doux",
+    price: 10000,
+    size: "100 ml",
+    image: "images/unique.png",
+    description: "Une création irrésistiblement sucrée et envoûtante. Une alchimie gourmande mêlant l'ananas exotique, la mandarine pétillante et la bergamote sur une touche sensuelle. Un parfum féminin lumineux et captivant qui fait immédiatement sensation."
   }
 ];
 
