@@ -188,7 +188,7 @@ const PRODUCTS_DATA = [
     price: 10000,
     size: "100 ml",
     image: "images/eclair.png",
-    description: "Une gourmandise lactée et vanillée absolument irrésistible. Un mélange somptueux de caramel fondant, vanille crémeuse, lait chaud et miel doré qui enveloppe la peau d'un voile doux, captivant et hautement séduisant."
+    description: "La sensation gourmande et sucrée virale. Une fragrance réconfortante et irrésistible aux effluves de vanille onctueuse, de caramel fondant et de gâteau fraîchement sorti du four. Un véritable délice olfactif pour les amoureuses de parfums gourmands et enveloppants."
   }
 ];
 
