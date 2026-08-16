@@ -27,12 +27,60 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v11.0_crisp_hd_images_fix';
+  const CURRENT_APP_VERSION = 'v12.0_ultra_hd_zoom_lightbox';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
     localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
   }
+
+  // --------------------------------------------------------------------------
+  // ULTRA-HD IMAGE ZOOM CONTROLLER (HD RAZOR SHARP LIGHTBOX)
+  // --------------------------------------------------------------------------
+  let currentZoomScale = 1.0;
+
+  window.openImageZoomModal = function(imgSrc, titleText = 'Zoom Parfum HD') {
+    const zoomImg = document.getElementById('zoom-modal-img');
+    const titleElem = document.getElementById('zoom-modal-title');
+    if (!zoomImg) return;
+
+    zoomImg.src = imgSrc;
+    if (titleElem) {
+      titleElem.innerHTML = `<i class="fas fa-magnifying-glass-plus text-gold-gradient"></i> ${titleText}`;
+    }
+    
+    currentZoomScale = 1.0;
+    zoomImg.style.transform = `scale(1)`;
+    zoomImg.style.cursor = 'zoom-in';
+
+    openModal('image-zoom-modal');
+  };
+
+  window.adjustImageZoom = function(delta) {
+    const zoomImg = document.getElementById('zoom-modal-img');
+    if (!zoomImg) return;
+
+    currentZoomScale = Math.min(Math.max(0.5, currentZoomScale + delta), 3.5);
+    zoomImg.style.transform = `scale(${currentZoomScale})`;
+    zoomImg.style.cursor = currentZoomScale > 1.2 ? 'zoom-out' : 'zoom-in';
+  };
+
+  window.resetImageZoom = function() {
+    const zoomImg = document.getElementById('zoom-modal-img');
+    if (!zoomImg) return;
+
+    currentZoomScale = 1.0;
+    zoomImg.style.transform = `scale(1)`;
+    zoomImg.style.cursor = 'zoom-in';
+  };
+
+  window.toggleImageZoom = function(e) {
+    if (currentZoomScale > 1.2) {
+      resetImageZoom();
+    } else {
+      adjustImageZoom(0.8);
+    }
+  };
 
   // SAFE PRODUCTS INITIALIZATION FOR VERCEL & LOCALSTORAGE
   let storedProductsRaw = localStorage.getItem('shone_products');
@@ -876,8 +924,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const escapedName = product.name.replace(/'/g, "\\'");
 
       card.innerHTML = `
-        <div class="product-image-box" onclick="window.openProductDetail('${product.id}')">
+        <div class="product-image-box" onclick="window.openImageZoomModal('${product.image}', '${escapedName}')" title="Cliquez pour agrandir en Haute Définition">
           <img src="${product.image}" alt="${product.name}" loading="lazy" />
+          <div style="position: absolute; top: 10px; right: 10px; background: rgba(10, 10, 15, 0.85); color: var(--gold-light); border: 1px solid var(--border-gold); padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.75rem; display: flex; align-items: center; gap: 5px; backdrop-filter: blur(4px); pointer-events: none; z-index: 2;">
+            <i class="fas fa-search-plus"></i> Zoom HD
+          </div>
         </div>
         <div class="product-info">
           <div class="product-size" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
