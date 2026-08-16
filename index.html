@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v50_full_purge';
+        var vKey = 'shone_v51_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v50_PRETTY_STOREFRONT" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v51_SECURE_ADMIN" />
 </head>
 <body>
 
@@ -375,7 +375,7 @@
 
         <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
           <div class="form-group">
-            <input type="password" id="admin-password-input" class="form-control" placeholder="Mot de passe admin (shone2026)..." required style="text-align: center;" />
+            <input type="password" id="admin-password-input" class="form-control" placeholder="Entrez votre mot de passe..." required style="text-align: center;" />
           </div>
           <button type="submit" class="btn btn-gold" style="width: 100%;">
             <i class="fas fa-lock-open"></i> Se connecter à l'Admin
@@ -1151,8 +1151,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v50_PRETTY_STOREFRONT"></script>
-  <script src="js/supabase.js?v=20260816_v50_PRETTY_STOREFRONT"></script>
-  <script src="js/app.js?v=20260816_v50_PRETTY_STOREFRONT"></script>
+  <script src="js/products.js?v=20260816_v51_SECURE_ADMIN"></script>
+  <script src="js/supabase.js?v=20260816_v51_SECURE_ADMIN"></script>
+  <script src="js/app.js?v=20260816_v51_SECURE_ADMIN"></script>
 </body>
 </html>
