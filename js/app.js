@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v22.0_charuto_tobacco_vanille_added';
+  const CURRENT_APP_VERSION = 'v23.0_oud_envoutant_nuclear_homme';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');

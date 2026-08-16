@@ -72,8 +72,8 @@ const PRODUCTS_DATA = [
   {
     id: "prod-7",
     name: "Oud Envoûtant",
-    gender: "femme",
-    genderLabel: "Femme",
+    gender: "homme",
+    genderLabel: "Homme",
     style: "Élégant",
     price: 25000,
     size: "100 ml",
@@ -83,8 +83,8 @@ const PRODUCTS_DATA = [
   {
     id: "prod-8",
     name: "Oud Nuclear",
-    gender: "femme",
-    genderLabel: "Femme",
+    gender: "homme",
+    genderLabel: "Homme",
     style: "Puissant",
     price: 12000,
     size: "100 ml",
