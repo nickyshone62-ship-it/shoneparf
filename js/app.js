@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v66.0_realtime_cloud_db_reviews_and_orders_sync';
+  const CURRENT_APP_VERSION = 'v68.0_pure_platform_messages_github_netlify';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -231,6 +231,37 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('rc-photo-preview-box').style.display = 'none';
 
     alert(`✓ Merci ${custName} ! Votre confirmation de réception avec photo pour la commande N° "${orderNum}" a bien été enregistrée sur la plateforme Shone Parfumerie !`);
+
+    if (document.getElementById('admin-view').style.display !== 'none') {
+      loadAdminData();
+    }
+  };
+
+  window.sendFeedbackSubmit = function(e) {
+    e.preventDefault();
+    const orderNum = document.getElementById('fb-order-num').value.trim();
+    const name = document.getElementById('fb-name').value.trim();
+    const msg = document.getElementById('fb-message').value.trim();
+
+    const newMessage = {
+      id: `msg-${Date.now()}`,
+      type: 'TÉMOIGNAGE APRÈS RÉCEPTION',
+      orderNumber: orderNum,
+      customerName: name,
+      customerPhone: '',
+      details: `Témoignage pour la commande ${orderNum} : "${msg}"`,
+      createdAt: new Date().toISOString()
+    };
+
+    allInboxMessages.unshift(newMessage);
+    localStorage.setItem('shone_inbox', JSON.stringify(allInboxMessages));
+
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushInboxMessage(newMessage);
+    }
+
+    closeModal('feedback-modal');
+    alert(`✓ Merci ${name} ! Votre témoignage pour la commande N° "${orderNum}" a bien été transmis à l'administrateur sur la plateforme Shone Parfumerie !`);
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -822,8 +853,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // PROCEDURE & AVAILABILITY HELPERS
   // --------------------------------------------------------------------------
   window.askAvailability = function() {
-    const waMsg = encodeURIComponent("Bonjour Shone Parfumerie, je souhaite vérifier la disponibilité d'un parfum d'exception avant de passer ma commande.");
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`, '_blank');
+    document.getElementById('avail-modal-perfume-name').textContent = "Sélection Parfumerie";
+    document.getElementById('avail-perfume-hidden-name').value = "Consultation Générale";
+    openModal('availability-modal');
   };
 
   window.openFeedbackForm = function() {
@@ -836,10 +868,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = document.getElementById('fb-name').value.trim();
     const msg = document.getElementById('fb-message').value.trim();
 
-    const waMsg = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (Commande ${orderNum}). Voici mon avis après réception de mon parfum : "${msg}"`);
-    
+    const newMessage = {
+      id: `msg-${Date.now()}`,
+      type: 'TÉMOIGNAGE APRÈS RÉCEPTION',
+      orderNumber: orderNum,
+      customerName: name,
+      customerPhone: '',
+      details: `Témoignage pour la commande ${orderNum} : "${msg}"`,
+      createdAt: new Date().toISOString()
+    };
+
+    allInboxMessages.unshift(newMessage);
+    localStorage.setItem('shone_inbox', JSON.stringify(allInboxMessages));
+
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushInboxMessage(newMessage);
+    }
+
     closeModal('feedback-modal');
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`, '_blank');
+    alert(`✓ Merci ${name} ! Votre témoignage pour la commande N° "${orderNum}" a bien été transmis à l'administrateur sur la plateforme Shone Parfumerie !`);
+
+    if (document.getElementById('admin-view').style.display !== 'none') {
+      loadAdminData();
+    }
   };
 
   // --------------------------------------------------------------------------
