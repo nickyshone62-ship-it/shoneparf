@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v59.0_google_maps_geolocation_added';
+  const CURRENT_APP_VERSION = 'v60.0_mali_country_and_zones_added';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -609,10 +609,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const countryEl = document.getElementById('direct-cust-country');
+    const country = countryEl ? countryEl.value : 'Burkina Faso';
     const name = document.getElementById('direct-cust-name').value.trim();
     const phone = document.getElementById('direct-cust-phone').value.trim();
 
-    const city = isDeliveryRequested ? (document.getElementById('direct-cust-city').value.trim() || 'Ouagadougou') : 'Retrait Boutique';
+    const city = isDeliveryRequested ? (document.getElementById('direct-cust-city').value.trim() || (country === 'Mali' ? 'Bamako' : 'Ouagadougou')) : 'Retrait Boutique';
     const neighborhood = isDeliveryRequested ? document.getElementById('direct-cust-neighborhood').value.trim() : 'Point de vente';
 
     const subtotal = currentOrderProduct.price * currentOrderQty;
@@ -625,7 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newOrder = {
       orderNumber,
-      customer: { name, phone, city, neighborhood },
+      customer: { name, phone, country, city, neighborhood },
       items: [{
         id: currentOrderProduct.id,
         name: currentOrderProduct.name,
@@ -635,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quantity: currentOrderQty
       }],
       subtotal,
-      deliveryFee: "À convenir selon le quartier",
+      deliveryFee: "À convenir selon la ville / quartier",
       total,
       deliveryRequested: isDeliveryRequested,
       trackingRequested: isTrackingRequested,
@@ -651,15 +653,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('success-order-num').textContent = orderNumber;
 
     const paymentLabel = currentPaymentMethod === 'orange' ? 'Orange Money' : currentPaymentMethod === 'moov' ? 'Moov Money' : currentPaymentMethod === 'wave' ? 'Wave' : 'Espèces à la livraison';
-    const deliveryText = isDeliveryRequested ? `Livraison souhaitée à ${neighborhood}, ${city} (Frais à convenir selon le quartier)` : 'Retrait en boutique (Sans livraison)';
+    const deliveryText = isDeliveryRequested ? `Livraison souhaitée à ${neighborhood}, ${city} (${country})` : 'Retrait en boutique (Sans livraison)';
 
     const waMsgText = `Bonjour Shone Parfumerie ! Je viens de valider ma commande avec reçu transmis :
 📌 N° Commande : ${orderNumber}
 💎 Parfum : ${currentOrderProduct.name} (Qté: ${currentOrderQty})
+🌍 Pays : ${country}
 👤 Client : ${name} (${phone})
 🚚 Zone / Quartier : ${deliveryText}
-💳 Paiement : ${paymentLabel} (Reçu téléversé)
-💰 PRIX DU PARFUM À PAYER : ${total.toLocaleString('fr-FR')} FCFA`;
+💳 Paiement : ${paymentLabel}
+💰 TOTAL À PAYER : ${total.toLocaleString('fr-FR')} FCFA`;
 
     document.getElementById('success-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`;
 

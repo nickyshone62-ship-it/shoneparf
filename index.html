@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v59_full_purge';
+        var vKey = 'shone_v60_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v59_GOOGLE_MAPS" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v60_MALI_SUPPORT" />
 </head>
 <body>
 
@@ -679,9 +679,9 @@
             <label class="form-label">Votre Nom & Prénom *</label>
             <input type="text" id="rev-author-name" class="form-control" placeholder="Ex: Mariam Kaboré" required />
           </div>
-          <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label">Ville / Quartier *</label>
-            <input type="text" id="rev-author-city" class="form-control" placeholder="Ex: Ouagadougou (Karpala)" required />
+          <div class="form-group">
+            <label class="form-label">Ville / Quartier / Pays *</label>
+            <input type="text" id="rev-author-city" class="form-control" placeholder="Ex: Ouagadougou (Karpala) ou Bamako (ACI 2000, Mali)" required />
           </div>
         </div>
 
@@ -758,15 +758,22 @@
 
       <form id="direct-order-form" onsubmit="submitDirectOrder(event)">
         
-        <!-- 2. COORDONNÉES CLIENT -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+        <!-- 2. COORDONNÉES CLIENT AVEC PAYS (BURKINA FASO & MALI) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label"><i class="fas fa-globe text-gold-gradient"></i> Pays *</label>
+            <select id="direct-cust-country" class="form-control" style="font-weight: 600;" onchange="if(window.onCountryChange) window.onCountryChange(this.value);">
+              <option value="Burkina Faso">🇧🇫 Burkina Faso (+226)</option>
+              <option value="Mali">🇲🇱 Mali (+223)</option>
+            </select>
+          </div>
           <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label"><i class="fas fa-user text-gold-gradient"></i> Nom du Client *</label>
             <input type="text" id="direct-cust-name" class="form-control" placeholder="Ex: Moussa Sawadogo" required />
           </div>
           <div class="form-group" style="margin-bottom: 0;">
-            <label class="form-label"><i class="fas fa-phone text-gold-gradient"></i> Numéro de Téléphone *</label>
-            <input type="tel" id="direct-cust-phone" class="form-control" placeholder="Ex: 70 00 00 00" required />
+            <label class="form-label"><i class="fas fa-phone text-gold-gradient"></i> Numéro WhatsApp *</label>
+            <input type="tel" id="direct-cust-phone" class="form-control" placeholder="Ex: 70 00 00 00 / 60 00 00 00" required />
           </div>
         </div>
 
@@ -788,11 +795,11 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label">Ville *</label>
-              <input type="text" id="direct-cust-city" class="form-control" value="Ouagadougou" required />
+              <input type="text" id="direct-cust-city" class="form-control" placeholder="Ex: Ouagadougou / Bamako" value="Ouagadougou" required />
             </div>
             <div class="form-group" style="margin-bottom: 0;">
               <label class="form-label">Quartier / Zone de livraison *</label>
-              <input type="text" id="direct-cust-neighborhood" class="form-control" placeholder="Ex: Karpala, Koulouba, Patte d'Oie..." required />
+              <input type="text" id="direct-cust-neighborhood" class="form-control" placeholder="Ex: Karpala (Ouaga) ou ACI 2000 (Bamako)..." required />
             </div>
           </div>
           <div style="font-size: 0.8rem; color: var(--gold-light); margin-top: 10px; display: flex; align-items: center; gap: 8px;">
@@ -1213,8 +1220,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v59_GOOGLE_MAPS"></script>
-  <script src="js/supabase.js?v=20260816_v59_GOOGLE_MAPS"></script>
-  <script src="js/app.js?v=20260816_v59_GOOGLE_MAPS"></script>
+  <script src="js/products.js?v=20260816_v60_MALI_SUPPORT"></script>
+  <script src="js/supabase.js?v=20260816_v60_MALI_SUPPORT"></script>
+  <script src="js/app.js?v=20260816_v60_MALI_SUPPORT"></script>
 </body>
 </html>
