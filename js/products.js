@@ -71,14 +71,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-7",
-    name: "Aurelia Paris",
+    name: "Oud Envoûtant",
     gender: "femme",
     genderLabel: "Femme",
-    style: "Séduisant",
-    price: 32000,
+    style: "Élégant",
+    price: 25000,
     size: "100 ml",
-    image: "images/aurelia.png",
-    description: "La signature emblématique d'Aurelia Paris. Une création d'or précieuse aux notes d'ambre oriental, d'agrumes ensoleillés et de bois précieux. Sillage irrésistible."
+    image: "images/oud-envoutant.png",
+    description: "Un parfum de pur luxe à la tenue légendaire et au sillage souverain. Un concentré d'élégance ouvrant sur la framboise, la pêche et le chocolat gourmand, sublimé par un cœur de cèdre et bois blanc, sur un fond envoûtant d'ambre, vanille et cuir noble. L'expression même du prestige."
   },
   {
     id: "prod-8",

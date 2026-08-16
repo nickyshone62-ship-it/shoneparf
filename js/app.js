@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v16.0_intense_noir_12k';
+  const CURRENT_APP_VERSION = 'v17.0_oud_envoutant_25k';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -115,9 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
       id: "rev-1",
       authorName: "Aminata Kaboré",
       city: "Ouagadougou (Karpala)",
-      perfume: "Aurelia Paris",
+      perfume: "Oud Envoûtant",
       stars: 5,
-      text: "J'ai commandé Aurelia Paris via Orange Money. Le parfum est arrivé en moins de 2 heures chez moi. La tenue sur mes vêtements est tout simplement incroyable du matin au soir !",
+      text: "J'ai commandé Oud Envoûtant via Orange Money. Le parfum est arrivé en moins de 2 heures chez moi. La tenue sur mes vêtements est tout simplement incroyable du matin au soir !",
       date: "2026-08-14"
     },
     {
