@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v9.0_intense_wayfarer_12k_desc';
+  const CURRENT_APP_VERSION = 'v10.0_asad_bourbon_vanilla_12k';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('shone_products', JSON.stringify(allProducts));
   }
 
-  // Update Velvet Rose image if present
-  const velvetIdx = allProducts.findIndex(p => p.name.toLowerCase().includes('velvet') || p.name.toLowerCase().includes('vanille'));
+  // Update Asad Bourbon / Velvet Rose image if present
+  const velvetIdx = allProducts.findIndex(p => p.name.toLowerCase().includes('velvet') || p.name.toLowerCase().includes('vanille') || p.name.toLowerCase().includes('asad'));
   if (velvetIdx > -1 && !allProducts[velvetIdx].image.startsWith('data:image')) {
-    allProducts[velvetIdx].image = "images/vanille-exaltante.png";
+    allProducts[velvetIdx].image = "images/asad-bourbon.png";
   }
 
   let allZones = JSON.parse(localStorage.getItem('shone_zones')) || [...DELIVERY_ZONES_DATA];
@@ -85,9 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
       id: "rev-3",
       authorName: "Fatoumata Traoré",
       city: "Koudougou",
-      perfume: "Velvet Rose",
+      perfume: "Asad Bourbon",
       stars: 5,
-      text: "Le conseiller olfactif m'a très bien orientée sur WhatsApp. Velvet Rose (Vanille Exaltante) est extrêmement doux et envoûtant. Je repasserai commande avec grand plaisir !",
+      text: "Le conseiller olfactif m'a très bien orientée sur WhatsApp. Asad Bourbon (Vanille Bourbon) est extrêmement puissant, gourmand et envoûtant. Je repasserai commande avec grand plaisir !",
       date: "2026-08-12"
     }
   ];

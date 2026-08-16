@@ -16,14 +16,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-2",
-    name: "Rose Noire de Nuit",
-    gender: "femme",
-    genderLabel: "Femme",
-    style: "Séduisant",
-    price: 28000,
+    name: "Asad Bourbon",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Puissant",
+    price: 12000,
     size: "100 ml",
-    image: "images/rose-noir.png",
-    description: "Une rose mystérieuse et envoûtante, mariée au safran et à la vanille noire. Une fragrance féminine d'une séduction irrésistible."
+    image: "images/asad-bourbon.png",
+    description: "Une création captivante dominée par une vanille bourbon d'exception aux accents profonds de chocolat gourmand. Un parfum puissant, chaleureux, durable et incroyablement séduisant."
   },
   {
     id: "prod-3",
@@ -82,14 +82,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-8",
-    name: "Velvet Rose (Vanille Exaltante)",
+    name: "Asad Bourbon (Vanille Exaltante)",
     gender: "femme",
     genderLabel: "Femme",
-    style: "Séduisant",
-    price: 29000,
+    style: "Puissant",
+    price: 12000,
     size: "100 ml",
-    image: "images/vanille-exaltante.png",
-    description: "Vanille Exaltante & Rose Veloutée d'une douceur infinie enrichie de notes boisées et d'ambre chaud. Une signature olfactive d'une sensualité absolue."
+    image: "images/asad-bourbon.png",
+    description: "Une création captivante dominée par une vanille bourbon d'exception aux accents profonds de chocolat gourmand. Un parfum puissant, chaleureux, durable et incroyablement séduisant."
   }
 ];
 
