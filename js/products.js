@@ -9,10 +9,10 @@ const PRODUCTS_DATA = [
     gender: "homme",
     genderLabel: "Homme",
     style: "Puissant",
-    price: 35000,
+    price: 12000,
     size: "100 ml",
     image: "images/intense-wayfarer.png",
-    description: "Une création d'exception Intense Wayfarer dominée par des notes d'Oud précieux, magnifiée par des accords boisés et ambrés. Flacon d'exception noir mat."
+    description: "Une bombe olfactive ultra boisée et épicée d'une puissance brute. Conçu pour les hommes audacieux qui cherchent un parfum de caractère au sillage percutant et à la tenue imbattable. Ne passe jamais inaperçu."
   },
   {
     id: "prod-2",
