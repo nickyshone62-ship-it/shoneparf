@@ -71,14 +71,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-7",
-    name: "Aurelia Paris",
+    name: "Intense Wayfarer",
     gender: "femme",
     genderLabel: "Femme",
     style: "Séduisant",
     price: 32000,
     size: "100 ml",
     image: "images/aurelia.png",
-    description: "La signature emblématique d'Aurelia Paris. Une création d'or précieuse aux notes d'ambre oriental, d'agrumes ensoleillés et de bois précieux. Sillage irrésistible."
+    description: "La signature emblématique d'Intense Wayfarer. Une création d'or précieuse aux notes d'ambre oriental, d'agrumes ensoleillés et de bois précieux. Sillage irrésistible."
   },
   {
     id: "prod-8",

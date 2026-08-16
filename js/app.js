@@ -27,9 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v4.0_restored_catalog';
+  const CURRENT_APP_VERSION = 'v5.0_intense_wayfarer';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
+    localStorage.removeItem('shone_reviews');
     localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
   }
 
@@ -66,9 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
       id: "rev-1",
       authorName: "Aminata Kaboré",
       city: "Ouagadougou (Karpala)",
-      perfume: "Aurelia Paris",
+      perfume: "Intense Wayfarer",
       stars: 5,
-      text: "J'ai commandé Aurelia Paris via Orange Money. Le parfum est arrivé en moins de 2 heures chez moi. La tenue sur mes vêtements est tout simplement incroyable du matin au soir !",
+      text: "J'ai commandé Intense Wayfarer via Orange Money. Le parfum est arrivé en moins de 2 heures chez moi. La tenue sur mes vêtements est tout simplement incroyable du matin au soir !",
       date: "2026-08-14"
     },
     {
