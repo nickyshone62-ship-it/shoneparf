@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v17.0_oud_envoutant_25k';
+  const CURRENT_APP_VERSION = 'v18.0_super_sharp_hd_zoom';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentZoomScale = 1.0;
     zoomImg.style.transform = `scale(1)`;
     zoomImg.style.cursor = 'zoom-in';
+    zoomImg.classList.remove('hd-sharpen');
 
     openModal('image-zoom-modal');
   };
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentZoomScale = Math.min(Math.max(0.5, currentZoomScale + delta), 3.5);
     zoomImg.style.transform = `scale(${currentZoomScale})`;
     zoomImg.style.cursor = currentZoomScale > 1.2 ? 'zoom-out' : 'zoom-in';
+    zoomImg.classList.toggle('hd-sharpen', currentZoomScale > 1.25);
   };
 
   window.resetImageZoom = function() {
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentZoomScale = 1.0;
     zoomImg.style.transform = `scale(1)`;
     zoomImg.style.cursor = 'zoom-in';
+    zoomImg.classList.remove('hd-sharpen');
   };
 
   window.toggleImageZoom = function(e) {
