@@ -178,17 +178,6 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/reserve.png",
     description: "Le best-seller absolu des fragrances de caractère. Une composition riche et complète mêlant l'éclat du citron et du gingembre à la sensualité du patchouli, de la vanille, du musc et du poivre rose. Un parfum puissant pour celles et ceux qui aiment s'imposer, avec une tenue record garantie d'au moins 72 heures sur les vêtements."
-  },
-  {
-    id: "prod-17",
-    name: "Éclair",
-    gender: "femme",
-    genderLabel: "Femme",
-    style: "Doux",
-    price: 10000,
-    size: "100 ml",
-    image: "images/eclair.png",
-    description: "La sensation gourmande et sucrée virale. Une fragrance réconfortante et irrésistible aux effluves de vanille onctueuse, de caramel fondant et de gâteau fraîchement sorti du four. Un véritable délice olfactif pour les amoureuses de parfums gourmands et enveloppants."
   }
 ];
 
