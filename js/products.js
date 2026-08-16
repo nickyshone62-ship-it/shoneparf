@@ -85,7 +85,7 @@ const PRODUCTS_DATA = [
     name: "Oud Nuclear",
     gender: "homme",
     genderLabel: "Homme",
-    style: "Puissant",
+    style: "Doux",
     price: 12000,
     size: "100 ml",
     image: "images/oud-nuclear.png",
