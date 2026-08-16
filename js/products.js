@@ -145,6 +145,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/unique.png",
     description: "Une création irrésistiblement sucrée et envoûtante. Une alchimie gourmande mêlant l'ananas exotique, la mandarine pétillante et la bergamote sur une touche sensuelle. Un parfum féminin lumineux et captivant qui fait immédiatement sensation."
+  },
+  {
+    id: "prod-14",
+    name: "Berries Weekend",
+    gender: "femme",
+    genderLabel: "Femme",
+    style: "Frais",
+    price: 10000,
+    size: "100 ml",
+    image: "images/berries-weekend.png",
+    description: "L'incarnation de l'élégance moderne et de la joie de vivre. Un bouquet floral et fruité pétillant, chic et sophistiqué. Conçu pour la femme pétillante qui souhaite laisser un sillage frais, jeune et remarquable lors de ses plus belles occasions festives."
   }
 ];
 
