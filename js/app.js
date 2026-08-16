@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v63.0_admin_official_review_reply_engine';
+  const CURRENT_APP_VERSION = 'v64.0_send_review_reply_on_whatsapp';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -291,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const authorName = document.getElementById('rev-author-name').value.trim();
     const city = document.getElementById('rev-author-city').value.trim();
+    const phone = document.getElementById('rev-author-phone') ? document.getElementById('rev-author-phone').value.trim() : '';
     const perfume = document.getElementById('rev-perfume-name').value.trim();
     const stars = parseInt(document.getElementById('rev-rating-stars').value);
     const text = document.getElementById('rev-message-text').value.trim();
@@ -299,6 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
       id: `rev-${Date.now()}`,
       authorName,
       city,
+      phone,
       perfume,
       stars,
       text,
@@ -1408,6 +1410,11 @@ document.addEventListener('DOMContentLoaded', () => {
       txtArea.value = (review && review.replyText) ? review.replyText : '';
     }
 
+    const phoneInp = document.getElementById('admin-rev-phone-input');
+    if (phoneInp) {
+      phoneInp.value = (review && review.phone) ? review.phone : '';
+    }
+
     const selectElem = document.getElementById('admin-rev-template-select');
     if (selectElem) selectElem.value = (review && review.replyText) ? "custom" : "1";
 
@@ -1466,6 +1473,41 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
       renderCustomerReviews();
       loadAdminData();
+    }
+  };
+
+  window.saveAndSendWaReviewReply = function() {
+    const reviewId = document.getElementById('admin-reply-review-id').value || currentReplyingReviewId;
+    const replyText = document.getElementById('admin-rev-reply-textarea').value.trim();
+    let phone = document.getElementById('admin-rev-phone-input') ? document.getElementById('admin-rev-phone-input').value.trim() : '';
+
+    if (!replyText) {
+      alert("Veuillez saisir votre réponse officielle.");
+      return;
+    }
+
+    if (!phone) {
+      phone = prompt(`Veuillez saisir le numéro WhatsApp de "${currentReplyingAuthor}" (Ex: 70000000 ou 22670000000) :`);
+      if (!phone) return;
+    }
+
+    const review = allReviews.find(r => r.id === reviewId);
+    if (review) {
+      review.replyText = replyText;
+      review.phone = phone;
+      review.replyDate = new Date().toISOString().slice(0, 10);
+      localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
+
+      renderCustomerReviews();
+      loadAdminData();
+
+      closeModal('admin-review-reply-modal');
+
+      const cleanPhone = phone.replace(/\s+/g, '');
+      const fullPhone = cleanPhone.startsWith('226') || cleanPhone.startsWith('223') ? cleanPhone : `226${cleanPhone}`;
+      const waMsgText = `Bonjour ${currentReplyingAuthor} ! 👋\nMerci d'avoir laissé votre avis sur le parfum ${currentReplyingPerfume || ''} chez Shone Parfumerie ! ✨\n\nVoici notre réponse officielle :\n"${replyText}"\n\nÀ très bientôt chez Shone Parfumerie ! 💎`;
+
+      window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(waMsgText)}`, '_blank');
     }
   };
 

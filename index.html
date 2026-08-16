@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v63_full_purge';
+        var vKey = 'shone_v64_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v63_REVIEW_REPLIES" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v64_WA_REVIEW_REPLIES" />
 </head>
 <body>
 
@@ -709,10 +709,15 @@
             <label class="form-label">Votre Nom & Prénom *</label>
             <input type="text" id="rev-author-name" class="form-control" placeholder="Ex: Mariam Kaboré" required />
           </div>
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label">Ville / Quartier / Pays *</label>
-            <input type="text" id="rev-author-city" class="form-control" placeholder="Ex: Ouagadougou (Karpala) ou Bamako (ACI 2000, Mali)" required />
+            <input type="text" id="rev-author-city" class="form-control" placeholder="Ex: Ouagadougou (Karpala) ou Bamako (ACI 2000)" required />
           </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Votre Numéro WhatsApp (Facultatif - Pour recevoir les remerciements de Shone)</label>
+          <input type="tel" id="rev-author-phone" class="form-control" placeholder="Ex: 70 00 00 00 / 60 00 00 00" />
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
@@ -1095,13 +1100,23 @@
         </div>
 
         <div class="form-group">
+          <label class="form-label"><i class="fas fa-phone text-gold-gradient"></i> Numéro WhatsApp du Client (Pour envoi direct) :</label>
+          <input type="tel" id="admin-rev-phone-input" class="form-control" placeholder="Ex: 70000000 ou 22670000000" />
+        </div>
+
+        <div class="form-group">
           <label class="form-label"><i class="fas fa-pen-to-square text-gold-gradient"></i> Votre Réponse Officielle (S'affiche sous l'avis sur la boutique) :</label>
           <textarea id="admin-rev-reply-textarea" class="form-control" rows="4" required style="line-height: 1.6; font-size: 0.95rem;"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 14px; font-size: 1.05rem;">
-          <i class="fas fa-paper-plane"></i> Publier la Réponse Officielle sur la Boutique
-        </button>
+        <div style="display: flex; gap: 12px;">
+          <button type="submit" class="btn btn-gold" style="flex: 1; padding: 12px; font-size: 0.95rem;">
+            <i class="fas fa-store"></i> Publier sur la Boutique
+          </button>
+          <button type="button" class="btn btn-whatsapp" style="flex: 1; padding: 12px; font-size: 0.95rem;" onclick="if(window.saveAndSendWaReviewReply) window.saveAndSendWaReviewReply();">
+            <i class="fab fa-whatsapp"></i> Publier & Envoyer sur WhatsApp
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -1328,8 +1343,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v63_REVIEW_REPLIES"></script>
-  <script src="js/supabase.js?v=20260816_v63_REVIEW_REPLIES"></script>
-  <script src="js/app.js?v=20260816_v63_REVIEW_REPLIES"></script>
+  <script src="js/products.js?v=20260816_v64_WA_REVIEW_REPLIES"></script>
+  <script src="js/supabase.js?v=20260816_v64_WA_REVIEW_REPLIES"></script>
+  <script src="js/app.js?v=20260816_v64_WA_REVIEW_REPLIES"></script>
 </body>
 </html>
