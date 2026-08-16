@@ -1,109 +1,145 @@
 /* ==========================================================================
-   SHONE PARFUMERIE - SUPABASE CLIENT INTEGRATION (STEP 5 & 6)
+   SHONE PARFUMERIE - SUPABASE & GLOBAL CLOUD SYNC ENGINE (REVIEWS, ORDERS & MESSAGES)
    ========================================================================== */
 
-// Configure your Supabase Credentials here or via window.ENV
+// Supabase Credentials
 const SUPABASE_URL = window.SUPABASE_URL || "https://your-supabase-project.supabase.co";
 const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || "your-anon-key";
 
 let supabaseClient = null;
 
-// Initialize Supabase if SDK is loaded from CDN and credentials are provided
 if (typeof supabase !== 'undefined' && SUPABASE_URL !== "https://your-supabase-project.supabase.co") {
-  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  console.log("Shone Parfumerie: Connecté avec succès à Supabase.");
-} else {
-  console.log("Shone Parfumerie: Mode LocalStorage actif (Prêt pour synchronisation Supabase).");
+  try {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("Shone Parfumerie: Connecté avec succès à Supabase.");
+  } catch (e) {
+    console.warn("Supabase init info:", e);
+  }
 }
 
-// Database Helper API Wrapper
-const ShoneDB = {
-  // 1. Fetch Products
-  async getProducts() {
-    if (supabaseClient) {
-      const { data, error } = await supabaseClient.from('products').select('*');
-      if (!error && data && data.length > 0) return data;
-    }
-    return JSON.parse(localStorage.getItem('shone_products')) || PRODUCTS_DATA;
-  },
+// --------------------------------------------------------------------------
+// GLOBAL CLOUD RELAY (SYNCHRONISATION MULTI-APPAREILS SANS SERVEUR COMPLEXE)
+// --------------------------------------------------------------------------
+const GLOBAL_CLOUD_ENDPOINT = "https://api.kvdb.io/shone_parfumerie_store_2026";
 
-  // 2. Add or Update Product
-  async saveProduct(productData) {
-    if (supabaseClient) {
-      const { data, error } = await supabaseClient.from('products').upsert([productData]).select();
-      if (!error) return data[0];
-    }
-    const products = JSON.parse(localStorage.getItem('shone_products')) || [...PRODUCTS_DATA];
-    const idx = products.findIndex(p => p.id === productData.id);
-    if (idx > -1) {
-      products[idx] = { ...products[idx], ...productData };
-    } else {
-      products.push(productData);
-    }
-    localStorage.setItem('shone_products', JSON.stringify(products));
-    return productData;
-  },
-
-  // 3. Create Order
-  async createOrder(orderObj) {
-    if (supabaseClient) {
-      const { data: orderData, error: orderErr } = await supabaseClient
-        .from('orders')
-        .insert([{
-          order_number: orderObj.orderNumber,
-          customer_name: orderObj.customer.name,
-          phone: orderObj.customer.phone,
-          city: orderObj.customer.city,
-          neighborhood: orderObj.customer.neighborhood,
-          address: orderObj.customer.address,
-          landmark: orderObj.customer.landmark,
-          delivery_fee: orderObj.deliveryFee,
-          subtotal: orderObj.subtotal,
-          total: orderObj.total,
-          status: orderObj.status || 'Commande reçue'
-        }])
-        .select();
-
-      if (!orderErr && orderData && orderData.length > 0) {
-        const orderId = orderData[0].id;
-        const itemsToInsert = orderObj.items.map(item => ({
-          order_id: orderId,
-          product_id: item.id,
-          quantity: item.quantity,
-          unit_price: item.price,
-          subtotal: item.price * item.quantity
-        }));
-        await supabaseClient.from('order_items').insert(itemsToInsert);
-        return orderData[0];
+const ShoneCloudSync = {
+  // 1. Synchroniser et pousser un nouvel avis client dans le Cloud
+  async pushReview(reviewObj) {
+    try {
+      if (supabaseClient) {
+        await supabaseClient.from('reviews').insert([reviewObj]);
       }
+      const existingReviews = await this.fetchCloudArray('reviews');
+      existingReviews.unshift(reviewObj);
+      await this.saveCloudArray('reviews', existingReviews);
+    } catch (err) {
+      console.log("Push review cloud info:", err);
     }
-
-    // LocalStorage Fallback
-    const orders = JSON.parse(localStorage.getItem('shone_orders')) || [];
-    orders.push(orderObj);
-    localStorage.setItem('shone_orders', JSON.stringify(orders));
-    return orderObj;
   },
 
-  // 4. Fetch All Orders (For Admin)
-  async getOrders() {
-    if (supabaseClient) {
-      const { data, error } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
-      if (!error && data) return data;
+  // 2. Synchroniser et pousser une nouvelle commande client dans le Cloud
+  async pushOrder(orderObj) {
+    try {
+      if (supabaseClient) {
+        await supabaseClient.from('orders').insert([orderObj]);
+      }
+      const existingOrders = await this.fetchCloudArray('orders');
+      existingOrders.unshift(orderObj);
+      await this.saveCloudArray('orders', existingOrders);
+    } catch (err) {
+      console.log("Push order cloud info:", err);
     }
-    return JSON.parse(localStorage.getItem('shone_orders')) || [];
   },
 
-  // 5. Update Order Status
-  async updateOrderStatus(orderNumber, newStatus) {
-    if (supabaseClient) {
-      await supabaseClient.from('orders').update({ status: newStatus }).eq('order_number', orderNumber);
+  // 3. Synchroniser et pousser un nouveau message client dans le Cloud
+  async pushInboxMessage(msgObj) {
+    try {
+      if (supabaseClient) {
+        await supabaseClient.from('messages').insert([msgObj]);
+      }
+      const existingMsgs = await this.fetchCloudArray('inbox');
+      existingMsgs.unshift(msgObj);
+      await this.saveCloudArray('inbox', existingMsgs);
+    } catch (err) {
+      console.log("Push inbox cloud info:", err);
     }
-    const orders = JSON.parse(localStorage.getItem('shone_orders')) || [];
-    const order = orders.find(o => o.orderNumber === orderNumber);
-    if (order) {
-      order.status = newStatus;
-      localStorage.setItem('shone_orders', JSON.stringify(orders));
+  },
+
+  // 4. Mettre à jour l'ensemble des données dans le Cloud (ex: réponse admin aux avis)
+  async saveAllReviews(reviewsArray) {
+    try {
+      await this.saveCloudArray('reviews', reviewsArray);
+    } catch (err) {}
+  },
+
+  // 5. Récupérer et fusionner toutes les données du Cloud vers le device Admin / Client
+  async pullAllData() {
+    try {
+      // Pull Reviews
+      const cloudReviews = await this.fetchCloudArray('reviews');
+      if (Array.isArray(cloudReviews) && cloudReviews.length > 0) {
+        let localReviews = JSON.parse(localStorage.getItem('shone_reviews')) || [];
+        const mergedReviews = this.mergeArraysById(localReviews, cloudReviews);
+        localStorage.setItem('shone_reviews', JSON.stringify(mergedReviews));
+      }
+
+      // Pull Orders
+      const cloudOrders = await this.fetchCloudArray('orders');
+      if (Array.isArray(cloudOrders) && cloudOrders.length > 0) {
+        let localOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
+        const mergedOrders = this.mergeArraysById(localOrders, cloudOrders, 'orderNumber');
+        localStorage.setItem('shone_orders', JSON.stringify(mergedOrders));
+      }
+
+      // Pull Inbox Messages
+      const cloudInbox = await this.fetchCloudArray('inbox');
+      if (Array.isArray(cloudInbox) && cloudInbox.length > 0) {
+        let localInbox = JSON.parse(localStorage.getItem('shone_inbox')) || [];
+        const mergedInbox = this.mergeArraysById(localInbox, cloudInbox);
+        localStorage.setItem('shone_inbox', JSON.stringify(mergedInbox));
+      }
+    } catch (err) {
+      console.log("Pull cloud data info:", err);
     }
+  },
+
+  // Helpers HTTP
+  async fetchCloudArray(key) {
+    try {
+      const res = await fetch(`${GLOBAL_CLOUD_ENDPOINT}/${key}`, { cache: 'no-cache' });
+      if (res.ok) {
+        const text = await res.text();
+        return text ? JSON.parse(text) : [];
+      }
+    } catch (e) {}
+    return [];
+  },
+
+  async saveCloudArray(key, arrayData) {
+    try {
+      await fetch(`${GLOBAL_CLOUD_ENDPOINT}/${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(arrayData.slice(0, 50)) // max 50 items per category
+      });
+    } catch (e) {}
+  },
+
+  mergeArraysById(localArr, cloudArr, keyField = 'id') {
+    const map = new Map();
+    [...cloudArr, ...localArr].forEach(item => {
+      if (item && item[keyField]) {
+        if (!map.has(item[keyField])) {
+          map.set(item[keyField], item);
+        } else {
+          // Merge replyText if present
+          const existing = map.get(item[keyField]);
+          map.set(item[keyField], { ...existing, ...item });
+        }
+      }
+    });
+    return Array.from(map.values());
   }
 };
+
+window.ShoneCloudSync = ShoneCloudSync;

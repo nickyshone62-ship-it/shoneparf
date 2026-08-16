@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v64.0_send_review_reply_on_whatsapp';
+  const CURRENT_APP_VERSION = 'v65.0_direct_platform_orders_and_global_cloud_sync';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -220,6 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
     allInboxMessages.unshift(newReceiptMessage);
     localStorage.setItem('shone_inbox', JSON.stringify(allInboxMessages));
 
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushInboxMessage(newReceiptMessage);
+    }
+
     closeModal('receipt-confirm-modal');
     
     // Reset form
@@ -310,6 +314,10 @@ document.addEventListener('DOMContentLoaded', () => {
     allReviews.unshift(newReview);
     localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
 
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushReview(newReview);
+    }
+
     closeModal('add-review-modal');
     renderCustomerReviews();
 
@@ -371,6 +379,10 @@ document.addEventListener('DOMContentLoaded', () => {
     allInboxMessages.unshift(newMessage);
     localStorage.setItem('shone_inbox', JSON.stringify(allInboxMessages));
 
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushInboxMessage(newMessage);
+    }
+
     closeModal('availability-modal');
     alert(`✓ Merci ${name} ! Votre demande de disponibilité pour "${perfumeName}" a bien été transmise à Shone Parfumerie. Notre équipe vous répondra très rapidement sur WhatsApp (${phone}).`);
     
@@ -401,6 +413,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     allInboxMessages.unshift(newMessage);
     localStorage.setItem('shone_inbox', JSON.stringify(allInboxMessages));
+
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushInboxMessage(newMessage);
+    }
 
     alert(`✓ Merci ${name} ! Votre demande de Conseil Olfactif a été enregistrée avec succès sur notre plateforme. L'équipe Shone Parfumerie analysera vos critères et vous enverra sa recommandation sur WhatsApp (${phone}).`);
     
@@ -671,6 +687,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     allOrders.unshift(newOrder);
     localStorage.setItem('shone_orders', JSON.stringify(allOrders));
+
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pushOrder(newOrder);
+    }
 
     document.getElementById('success-order-num').textContent = orderNumber;
 
@@ -1527,8 +1547,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchInput) searchInput.addEventListener('input', applyFiltersAndSort);
   if (sortSelect) sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; applyFiltersAndSort(); });
 
-  // INITIAL RUN
+  // INITIAL RUN WITH AUTOMATIC MULTI-DEVICE CLOUD SYNC
   applyFiltersAndSort();
   renderDeliveryZones();
   renderCustomerReviews();
+
+  if (window.ShoneCloudSync) {
+    window.ShoneCloudSync.pullAllData().then(() => {
+      allReviews = JSON.parse(localStorage.getItem('shone_reviews')) || defaultReviews;
+      allOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
+      allInboxMessages = JSON.parse(localStorage.getItem('shone_inbox')) || [];
+      renderCustomerReviews();
+      if (document.getElementById('admin-view').style.display !== 'none') {
+        loadAdminData();
+      }
+    });
+  }
 });
