@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v58_full_purge';
+        var vKey = 'shone_v59_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v58_HORIZONTAL_REVIEWS" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v59_GOOGLE_MAPS" />
 </head>
 <body>
 
@@ -50,6 +50,7 @@
         <li><a href="#advisor-section" class="nav-link"><i class="fas fa-wand-magic-sparkles"></i> Conseiller Olfactif</a></li>
         <li><a href="#parfums" class="nav-link" onclick="filterByGenderNav('all')">Nos parfums</a></li>
         <li><a href="#reviews-section" class="nav-link"><i class="fas fa-star text-gold-gradient"></i> Avis Clients</a></li>
+        <li><a href="#location-section" class="nav-link"><i class="fas fa-location-dot text-gold-gradient"></i> Localisation GPS</a></li>
         <li><a href="#livraison" class="nav-link">Livraison</a></li>
         <li><a href="#" class="nav-link" onclick="openModal('tracking-modal'); return false;">Suivre ma commande</a></li>
       </ul>
@@ -364,6 +365,54 @@
 
         <div class="delivery-zones-grid" id="delivery-zones-grid">
           <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION GEOLOCALISATION GPS & GOOGLE MAPS -->
+    <section class="section" id="location-section" style="border-top: 1px solid var(--border-gold);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle"><i class="fas fa-location-dot text-gold-gradient"></i> Notre Emplacement Officiel</span>
+          <h2 class="section-title">Retrouvez Notre Boutique à Ouagadougou</h2>
+          <p class="section-desc">Passez en boutique ou géolocalisez votre livraison avec précision sur Google Maps.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; align-items: center;">
+          <!-- MAP EMBED IFRAME -->
+          <div style="border-radius: var(--radius-lg); overflow: hidden; border: 2px solid var(--border-gold); box-shadow: var(--shadow-dark), var(--shadow-gold); position: relative; min-height: 340px;">
+            <iframe 
+              src="https://maps.google.com/maps?q=12.3362398147583,-1.4746888875961304&z=17&output=embed" 
+              width="100%" 
+              height="360" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Geolocalisation Google Maps Shone Parfumerie">
+            </iframe>
+          </div>
+
+          <!-- LOCATION INFOS & GOOGLE MAPS BUTTON -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-dark);">
+            <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;">
+              <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold-primary); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <i class="fas fa-map-location-dot"></i>
+              </div>
+              <div>
+                <h3 style="font-family: var(--font-heading); color: var(--gold-light); font-size: 1.3rem;">Boutique SHONE PARFUMERIE</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Ouagadougou, Burkina Faso</p>
+              </div>
+            </div>
+
+            <p style="color: var(--text-main); font-size: 0.95rem; line-height: 1.7; margin-bottom: 24px;">
+              Retrouvez l'intégralité de nos fragrances de luxe et testez nos senteurs directement sur place, ou faites-vous livrer rapidement chez vous.
+            </p>
+
+            <a href="https://maps.google.com/maps?q=12.3362398147583%2C-1.4746888875961304&z=17&hl=fr" target="_blank" class="btn btn-gold" style="width: 100%; padding: 14px 20px; font-size: 1rem;">
+              <i class="fas fa-diamond-turn-right"></i> Ouvrir dans Google Maps (Navigation GPS)
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1073,7 +1122,11 @@
         <h4>Contact & Réseaux</h4>
         <ul class="footer-links">
           <li><i class="fas fa-phone text-gold-gradient"></i> +226 06 88 73 30</li>
-          <li><i class="fas fa-location-dot text-gold-gradient"></i> Ouagadougou, Burkina Faso</li>
+          <li>
+            <a href="https://maps.google.com/maps?q=12.3362398147583%2C-1.4746888875961304&z=17&hl=fr" target="_blank" style="color: var(--text-main); text-decoration: none;">
+              <i class="fas fa-location-dot text-gold-gradient"></i> Ouagadougou, Burkina Faso (Carte GPS)
+            </a>
+          </li>
           <li style="margin-top: 6px;">
             <a href="https://wa.me/22606887330" target="_blank" style="color: #25D366; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
               <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> WhatsApp
@@ -1160,8 +1213,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v58_HORIZONTAL_REVIEWS"></script>
-  <script src="js/supabase.js?v=20260816_v58_HORIZONTAL_REVIEWS"></script>
-  <script src="js/app.js?v=20260816_v58_HORIZONTAL_REVIEWS"></script>
+  <script src="js/products.js?v=20260816_v59_GOOGLE_MAPS"></script>
+  <script src="js/supabase.js?v=20260816_v59_GOOGLE_MAPS"></script>
+  <script src="js/app.js?v=20260816_v59_GOOGLE_MAPS"></script>
 </body>
 </html>
