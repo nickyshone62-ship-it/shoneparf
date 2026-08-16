@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v60.0_mali_country_and_zones_added';
+  const CURRENT_APP_VERSION = 'v61.0_fix_all_customer_reviews_visible';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -93,34 +93,61 @@ document.addEventListener('DOMContentLoaded', () => {
   let allOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
   let allInboxMessages = JSON.parse(localStorage.getItem('shone_inbox')) || [];
 
-  // DEFAULT REVIEWS
+  // DEFAULT REVIEWS (BURKINA FASO & MALI)
   const defaultReviews = [
     {
       id: "rev-1",
       authorName: "Aminata Kaboré",
       city: "Ouagadougou (Karpala)",
-      perfume: "Oud Envoûtant",
+      perfume: "Éclair",
       stars: 5,
-      text: "J'ai commandé Oud Envoûtant via Orange Money. Le parfum est arrivé en moins de 2 heures chez moi. La tenue sur mes vêtements est tout simplement incroyable du matin au soir !",
-      date: "2026-08-14"
+      text: "Le parfum Éclair est une pure merveille gourmande ! La vanille et le caramel sentent divinement bon. Livraison express parfaite chez moi à Karpala !",
+      date: "2026-08-16"
     },
     {
       id: "rev-2",
+      authorName: "Fatoumata Traoré",
+      city: "Bamako (ACI 2000, Mali)",
+      perfume: "Liquid Brun",
+      stars: 5,
+      text: "Reçu très rapidement à Bamako. Liquid Brun est une fragrance de luxe rare et envoûtante avec une tenue exceptionnelle de 72h. Merci Shone Parfumerie !",
+      date: "2026-08-15"
+    },
+    {
+      id: "rev-3",
       authorName: "Moussa Sawadogo",
       city: "Bobo-Dioulasso",
       perfume: "Intense Wayfarer",
       stars: 5,
       text: "Intense Wayfarer est d'une puissance et d'une rareté remarquables. Merci à toute l'équipe Shone Parfumerie pour la rapidité du service et le suivi SHN très pratique.",
+      date: "2026-08-14"
+    },
+    {
+      id: "rev-4",
+      authorName: "Ousmane Koné",
+      city: "Ouagadougou (Patte d'Oie)",
+      perfume: "Monark",
+      stars: 5,
+      text: "Monark est d'une grande élégance. Le flacon HD et le packaging avec le lion couronné sont magnifiques. Une tenue record garantie !",
       date: "2026-08-13"
     },
     {
-      id: "rev-3",
-      authorName: "Fatoumata Traoré",
-      city: "Koudougou",
+      id: "rev-5",
+      authorName: "Aïcha Diallo",
+      city: "Bamako (Badalabougou, Mali)",
       perfume: "Asad Bourbon",
       stars: 5,
-      text: "Le conseiller olfactif m'a très bien orientée sur WhatsApp. Asad Bourbon (Vanille Bourbon) est extrêmement puissant, gourmand et envoûtant. Je repasserai commande avec grand plaisir !",
+      text: "Le conseiller olfactif m'a très bien orientée sur WhatsApp. Asad Bourbon (Vanille Bourbon) est extrêmement puissant, gourmand et envoûtant.",
       date: "2026-08-12"
+    },
+    {
+      id: "rev-6",
+      authorName: "Brahima Sanou",
+      city: "Koudougou",
+      perfume: "Réserve",
+      stars: 5,
+      text: "Le best-seller Réserve est au rendez-vous. La fragrance est riche, boisée et raffinée. Service impeccable !",
+      date: "2026-08-11"
     }
   ];
 
@@ -213,25 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('reviews-cards-container');
     if (!container) return;
 
-    // Get list of active available product names
-    const activeProductNames = allProducts.map(p => p.name.toLowerCase());
-
-    // Filter reviews to show those matching available products, or assign to active available products
-    let validReviews = allReviews.filter(rev => {
-      return activeProductNames.some(pName => pName.includes(rev.perfume.toLowerCase()) || rev.perfume.toLowerCase().includes(pName));
-    });
-
-    // If active products were deleted, adapt review perfume names to active available ones
-    if (validReviews.length === 0 && allProducts.length > 0) {
-      validReviews = allReviews.map((rev, index) => {
-        const activeProd = allProducts[index % allProducts.length];
-        return {
-          ...rev,
-          perfume: activeProd.name,
-          text: `J'ai commandé ${activeProd.name}. Le parfum est arrivé très rapidement. La tenue sur mes vêtements est tout simplement formidable !`
-        };
-      });
-    }
+    // Always use allReviews or fallback to defaultReviews
+    const validReviews = (Array.isArray(allReviews) && allReviews.length > 0) ? allReviews : defaultReviews;
 
     if (validReviews.length === 0) {
       container.innerHTML = `
