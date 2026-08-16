@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v43.0_eclair_official_lattafa_photo_added';
+  const CURRENT_APP_VERSION = 'v44.0_eclair_image_replaced_20260816';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
