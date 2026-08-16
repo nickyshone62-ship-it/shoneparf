@@ -38,14 +38,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-4",
-    name: "Jasmin Royal d'Orient",
-    gender: "femme",
-    genderLabel: "Femme",
-    style: "Doux",
-    price: 26000,
+    name: "Liquid Brun",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Puissant",
+    price: 25000,
     size: "100 ml",
-    image: "images/jasmin-royal.png",
-    description: "Un bouquet délicat de jasmin d'Arabie rehaussé de fleurs blanches et d'une touche sucrée. Senteur extrêmement douce et raffinée."
+    image: "images/liquid-brun.png",
+    description: "Une véritable masterclass gourmande au sillage puissant et à la tenue exceptionnelle. Une fragrance sucrée et envoûtante mêlant vanille, praline intense, caramel et notes florales délicates. Le parfum ultime pour faire sensation et récolter les compliments."
   },
   {
     id: "prod-5",
