@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rcPhotoBase64 = null;
 
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v3.0_empty_catalog_custom';
+  const CURRENT_APP_VERSION = 'v4.0_restored_catalog';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
@@ -42,9 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
     parsedProducts = null;
   }
 
-  let allProducts = Array.isArray(parsedProducts) ? parsedProducts : [...PRODUCTS_DATA];
+  let allProducts = (Array.isArray(parsedProducts) && parsedProducts.length > 0)
+    ? parsedProducts
+    : [...PRODUCTS_DATA];
 
-  if (!storedProductsRaw || !Array.isArray(parsedProducts)) {
+  if (!storedProductsRaw || !Array.isArray(parsedProducts) || parsedProducts.length === 0) {
     localStorage.setItem('shone_products', JSON.stringify(allProducts));
   }
 
