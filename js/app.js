@@ -26,13 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Receipt Photo Confirmation Base64
   let rcPhotoBase64 = null;
 
-  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v23.0_oud_envoutant_nuclear_homme';
-  if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
-    localStorage.removeItem('shone_products');
-    localStorage.removeItem('shone_reviews');
-    localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
-  }
+
 
   // --------------------------------------------------------------------------
   // ULTRA-HD IMAGE ZOOM CONTROLLER (HD RAZOR SHARP LIGHTBOX)
@@ -83,24 +77,17 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       adjustImageZoom(0.8);
     }
-  };
+  };  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
+  const CURRENT_APP_VERSION = 'v24.0_FORCE_FULL_CATALOG_HOMME';
+  if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
+    localStorage.removeItem('shone_products');
+    localStorage.removeItem('shone_reviews');
+    localStorage.setItem('shone_app_version', CURRENT_APP_VERSION);
+  }
 
   // SAFE PRODUCTS INITIALIZATION FOR VERCEL & LOCALSTORAGE
-  let storedProductsRaw = localStorage.getItem('shone_products');
-  let parsedProducts = null;
-  try {
-    if (storedProductsRaw) parsedProducts = JSON.parse(storedProductsRaw);
-  } catch (e) {
-    parsedProducts = null;
-  }
-
-  let allProducts = (Array.isArray(parsedProducts) && parsedProducts.length > 0)
-    ? parsedProducts
-    : [...PRODUCTS_DATA];
-
-  if (!storedProductsRaw || !Array.isArray(parsedProducts) || parsedProducts.length === 0) {
-    localStorage.setItem('shone_products', JSON.stringify(allProducts));
-  }
+  let allProducts = [...PRODUCTS_DATA];
+  localStorage.setItem('shone_products', JSON.stringify(allProducts));
 
   // Update Asad Bourbon / Velvet Rose image if present
   const velvetIdx = allProducts.findIndex(p => p.name.toLowerCase().includes('velvet') || p.name.toLowerCase().includes('vanille') || p.name.toLowerCase().includes('asad'));
