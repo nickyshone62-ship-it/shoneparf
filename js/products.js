@@ -167,6 +167,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/24k-white.png",
     description: "Le rapport qualité/prix ultime de la parfumerie orientale. Des créations renommées pour leur tenue longue durée, leur puissance et leur sillage captivant. L'alliance parfaite entre luxe accessible, fraîcheur et intensité au quotidien."
+  },
+  {
+    id: "prod-16",
+    name: "Réserve",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Puissant",
+    price: 10000,
+    size: "100 ml",
+    image: "images/reserve.png",
+    description: "Le best-seller absolu des fragrances de caractère. Une composition riche et complète mêlant l'éclat du citron et du gingembre à la sensualité du patchouli, de la vanille, du musc et du poivre rose. Un parfum puissant pour celles et ceux qui aiment s'imposer, avec une tenue record garantie d'au moins 72 heures sur les vêtements."
   }
 ];
 
