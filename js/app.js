@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v61.0_fix_all_customer_reviews_visible';
+  const CURRENT_APP_VERSION = 'v62.0_predefined_whatsapp_reply_engine';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -1138,6 +1138,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const waReplyText = `Bonjour ${msg.customerName}, nous avons bien reçu votre message nous nous apprêtons à vous répondre.`;
       const waReplyUrl = `https://wa.me/${fullPhone}?text=${encodeURIComponent(waReplyText)}`;
 
+      const escapedName = (msg.customerName || 'Client').replace(/'/g, "\\'");
+      const escapedPhone = (msg.customerPhone || '').replace(/'/g, "\\'");
+      const escapedDetails = (msg.details || '').replace(/'/g, "\\'");
+
       // PHOTO THUMBNAIL IF PRESENT
       const photoHtml = msg.photoImage 
         ? `<div style="margin-top: 8px;"><a href="${msg.photoImage}" target="_blank"><img src="${msg.photoImage}" style="max-height: 70px; border-radius: 6px; border: 1px solid var(--border-gold);" title="Cliquez pour agrandir la photo de preuve" /></a><div style="font-size: 0.7rem; color: var(--gold-primary);">📸 Photo transmise</div></div>`
@@ -1155,9 +1159,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
           <td style="padding: 14px;">
             <div style="display: flex; gap: 8px; align-items: center;">
-              <a href="${waReplyUrl}" target="_blank" class="btn btn-whatsapp" style="padding: 6px 12px; font-size: 0.8rem;">
-                <i class="fab fa-whatsapp"></i> Répondre sur WhatsApp
-              </a>
+              <button class="btn btn-whatsapp" style="padding: 6px 12px; font-size: 0.8rem;" onclick="window.openWaReplyModal('${escapedName}', '${escapedPhone}', '', '${escapedDetails}')">
+                <i class="fab fa-whatsapp"></i> Répondre WhatsApp (Message Prédéfini)
+              </button>
               <button class="btn btn-outline" style="padding: 6px 10px; font-size: 0.8rem; border-color: var(--accent-danger); color: var(--accent-danger);" onclick="deleteInboxMessage('${msg.id}')">
                 <i class="fas fa-trash"></i>
               </button>
@@ -1168,33 +1172,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
+  // --------------------------------------------------------------------------
+  // PREDEFINED WHATSAPP REPLY ENGINE FOR ADMIN
+  // --------------------------------------------------------------------------
+  let currentWaTarget = { name: '', phone: '', orderNum: '', perfumeName: '', neighborhood: '' };
+
+  window.openWaReplyModal = function(name, phone, orderNum = '', perfumeName = '', neighborhood = '') {
+    currentWaTarget = { name, phone, orderNum, perfumeName, neighborhood };
+    
+    const infoElem = document.getElementById('wa-reply-dest-info');
+    if (infoElem) {
+      infoElem.innerHTML = `Client : <strong style="color: var(--gold-light);">${name}</strong> (${phone})`;
+    }
+
+    const selectElem = document.getElementById('wa-template-select');
+    if (selectElem) selectElem.value = "1";
+    window.applyWaTemplate("1");
+
+    openModal('wa-reply-modal');
+  };
+
+  window.applyWaTemplate = function(templateId) {
+    const txtArea = document.getElementById('wa-reply-text-area');
+    if (!txtArea) return;
+
+    const { name, orderNum, perfumeName, neighborhood } = currentWaTarget;
+
+    if (templateId === "1") {
+      txtArea.value = `Bonjour ${name}, nous avons bien reçu votre message chez Shone Parfumerie. Nous nous apprêtons à vous répondre ! Merci de votre confiance.`;
+    } else if (templateId === "2") {
+      txtArea.value = `Bonjour ${name}, votre commande ${orderNum ? 'N° ' + orderNum : ''} ${perfumeName ? '(' + perfumeName + ')' : ''} est bien confirmée et en cours de préparation chez Shone Parfumerie !`;
+    } else if (templateId === "3") {
+      txtArea.value = `Bonjour ${name}, le parfum ${perfumeName || 'que vous avez demandé'} est actuellement disponible dans notre boutique ! Souhaitez-vous valider votre livraison ?`;
+    } else if (templateId === "4") {
+      txtArea.value = `Bonjour ${name}, votre commande est prête ! Notre livreur s'apprête à vous contacter pour la livraison à ${neighborhood || 'votre adresse'}. Merci de votre confiance !`;
+    }
+  };
+
+  window.launchWaReplySubmit = function() {
+    const text = document.getElementById('wa-reply-text-area').value.trim();
+    if (!text) {
+      alert("Veuillez rédiger ou choisir un message.");
+      return;
+    }
+
+    const cleanPhone = currentWaTarget.phone ? currentWaTarget.phone.replace(/\s+/g, '') : '';
+    const fullPhone = cleanPhone.startsWith('226') || cleanPhone.startsWith('223') ? cleanPhone : `226${cleanPhone}`;
+    const url = `https://wa.me/${fullPhone}?text=${encodeURIComponent(text)}`;
+    
+    window.open(url, '_blank');
+    closeModal('wa-reply-modal');
+  };
+
   function renderAdminOrdersTable(orders) {
     const tbody = document.getElementById('admin-orders-tbody');
     if (!tbody) return;
 
     if (orders.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucune commande enregistrée.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucune commande enregistrée.</td></tr>`;
       return;
     }
 
     const statuses = ['Commande reçue', 'Commande confirmée', 'En préparation', 'En livraison', 'Livrée'];
 
-    tbody.innerHTML = orders.map(o => `
-      <tr style="border-bottom: 1px solid var(--border-dark);">
-        <td style="padding: 14px;"><strong style="color: var(--gold-light);">${o.orderNumber}</strong></td>
-        <td style="padding: 14px; font-size: 0.85rem;">${new Date(o.createdAt || Date.now()).toLocaleDateString('fr-FR')}</td>
-        <td style="padding: 14px;">${o.customer ? o.customer.name : 'Client'}</td>
-        <td style="padding: 14px;">${o.customer ? o.customer.phone : '-'}</td>
-        <td style="padding: 14px;">${o.customer ? o.customer.neighborhood : '-'} (${o.customer ? o.customer.city : ''})</td>
-        <td style="padding: 14px;"><span style="background: rgba(212,175,55,0.15); color: var(--gold-primary); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">${o.paymentMethod || 'ESPÈCES'}</span></td>
-        <td style="padding: 14px;"><strong>${(o.total || 0).toLocaleString('fr-FR')} FCFA</strong></td>
-        <td style="padding: 14px;">
-          <select class="status-select" onchange="changeOrderStatus('${o.orderNumber}', this.value)">
-            ${statuses.map(st => `<option value="${st}" ${o.status === st ? 'selected' : ''}>${st}</option>`).join('')}
-          </select>
-        </td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = orders.map(o => {
+      const custName = (o.customer ? o.customer.name : 'Client').replace(/'/g, "\\'");
+      const custPhone = (o.customer ? o.customer.phone : '').replace(/'/g, "\\'");
+      const firstItemName = (o.items && o.items[0]) ? o.items[0].name.replace(/'/g, "\\'") : '';
+      const neighborhood = (o.customer ? o.customer.neighborhood : '').replace(/'/g, "\\'");
+
+      return `
+        <tr style="border-bottom: 1px solid var(--border-dark);">
+          <td style="padding: 14px;"><strong style="color: var(--gold-light);">${o.orderNumber}</strong></td>
+          <td style="padding: 14px; font-size: 0.85rem;">${new Date(o.createdAt || Date.now()).toLocaleDateString('fr-FR')}</td>
+          <td style="padding: 14px;">${o.customer ? o.customer.name : 'Client'}</td>
+          <td style="padding: 14px;">${o.customer ? o.customer.phone : '-'}</td>
+          <td style="padding: 14px;">${o.customer ? o.customer.neighborhood : '-'} (${o.customer ? o.customer.city : ''})</td>
+          <td style="padding: 14px;"><span style="background: rgba(212,175,55,0.15); color: var(--gold-primary); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">${o.paymentMethod || 'ESPÈCES'}</span></td>
+          <td style="padding: 14px;"><strong>${(o.total || 0).toLocaleString('fr-FR')} FCFA</strong></td>
+          <td style="padding: 14px;">
+            <select class="status-select" onchange="changeOrderStatus('${o.orderNumber}', this.value)">
+              ${statuses.map(st => `<option value="${st}" ${o.status === st ? 'selected' : ''}>${st}</option>`).join('')}
+            </select>
+          </td>
+          <td style="padding: 14px;">
+            <button class="btn btn-whatsapp" style="padding: 6px 12px; font-size: 0.8rem;" onclick="window.openWaReplyModal('${custName}', '${custPhone}', '${o.orderNumber}', '${firstItemName}', '${neighborhood}')">
+              <i class="fab fa-whatsapp"></i> Répondre WhatsApp
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
   }
 
   window.changeOrderStatus = function(orderNumber, newStatus) {

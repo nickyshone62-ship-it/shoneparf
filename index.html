@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v61_full_purge';
+        var vKey = 'shone_v62_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v61_REVIEWS_FIXED" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v62_PREDEFINED_WA" />
 </head>
 <body>
 
@@ -537,6 +537,7 @@
                 <th style="padding: 14px;">Paiement</th>
                 <th style="padding: 14px;">Total</th>
                 <th style="padding: 14px;">Statut</th>
+                <th style="padding: 14px;">Action WhatsApp</th>
               </tr>
             </thead>
             <tbody id="admin-orders-tbody">
@@ -998,6 +999,41 @@
     </div>
   </div>
 
+  <!-- MODAL: RÉPONSE WHATSAPP PRÉDÉFINIE ADMIN -->
+  <div class="modal-overlay" id="wa-reply-modal">
+    <div class="modal-card" style="max-width: 620px;">
+      <button class="modal-close" onclick="closeModal('wa-reply-modal')"><i class="fas fa-times"></i></button>
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(37, 211, 102, 0.15); color: #25D366; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 12px auto; border: 1px solid #25D366;">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <h2 style="font-family: var(--font-heading); color: var(--gold-light); font-size: 1.5rem;">Répondre sur WhatsApp</h2>
+        <p id="wa-reply-dest-info" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;"></p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label"><i class="fas fa-list-check text-gold-gradient"></i> Choisir un Modèle de Message Prédéfini :</label>
+        <select id="wa-template-select" class="form-control" onchange="if(window.applyWaTemplate) window.applyWaTemplate(this.value);" style="font-weight: 600;">
+          <option value="1">1. Accusé de réception ("Nous avons bien reçu votre message...")</option>
+          <option value="2">2. Confirmation de Commande ("Votre commande est confirmée...")</option>
+          <option value="3">3. Disponibilité Stock ("Le parfum est actuellement disponible en boutique...")</option>
+          <option value="4">4. Envoi / Livraison en cours ("Votre livreur s'apprête à vous contacter...")</option>
+          <option value="custom">5. Message Personnalisé (Libre)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label"><i class="fas fa-comment-dots text-gold-gradient"></i> Aperçu / Édition du Message WhatsApp :</label>
+        <textarea id="wa-reply-text-area" class="form-control" rows="5" style="line-height: 1.6; font-size: 0.95rem;"></textarea>
+      </div>
+
+      <button type="button" class="btn btn-whatsapp" style="width: 100%; padding: 14px; font-size: 1.05rem;" onclick="if(window.launchWaReplySubmit) window.launchWaReplySubmit();">
+        <i class="fab fa-whatsapp"></i> Envoyer ce Message sur WhatsApp
+      </button>
+    </div>
+  </div>
+
   <!-- MODAL: DÉTAIL DU PRODUIT -->
   <div class="modal-overlay" id="product-modal">
     <div class="modal-card">
@@ -1220,8 +1256,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v61_REVIEWS_FIXED"></script>
-  <script src="js/supabase.js?v=20260816_v61_REVIEWS_FIXED"></script>
-  <script src="js/app.js?v=20260816_v61_REVIEWS_FIXED"></script>
+  <script src="js/products.js?v=20260816_v62_PREDEFINED_WA"></script>
+  <script src="js/supabase.js?v=20260816_v62_PREDEFINED_WA"></script>
+  <script src="js/app.js?v=20260816_v62_PREDEFINED_WA"></script>
 </body>
 </html>
