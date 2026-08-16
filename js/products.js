@@ -156,6 +156,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/berries-weekend.png",
     description: "L'incarnation de l'élégance moderne et de la joie de vivre. Un bouquet floral et fruité pétillant, chic et sophistiqué. Conçu pour la femme pétillante qui souhaite laisser un sillage frais, jeune et remarquable lors de ses plus belles occasions festives."
+  },
+  {
+    id: "prod-15",
+    name: "24K White",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Doux",
+    price: 5000,
+    size: "100 ml",
+    image: "images/24k-white.png",
+    description: "Le rapport qualité/prix ultime de la parfumerie orientale. Des créations renommées pour leur tenue longue durée, leur puissance et leur sillage captivant. L'alliance parfaite entre luxe accessible, fraîcheur et intensité au quotidien."
   }
 ];
 
