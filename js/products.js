@@ -49,14 +49,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-5",
-    name: "Musk Impérial d'Or",
+    name: "Valiance",
     gender: "homme",
     genderLabel: "Homme",
-    style: "Doux",
-    price: 24000,
+    style: "Séduisant",
+    price: 10000,
     size: "100 ml",
-    image: "images/musk-imperial.png",
-    description: "Le summum de la pureté olfactive. Un musc doux et velouté enrichi d'ambre blanc et de santal pour une fraîcheur apaisante."
+    image: "images/valiance.png",
+    description: "Une fragrance captivante et sensuelle aux notes gourmandes et boisées. Il associe la vanille crémeuse, des nuances de chocolat et de café, enveloppées dans la noblesse du cuir léger et du bois précieux. Un sillage irrésistible et élégant."
   },
   {
     id: "prod-6",
