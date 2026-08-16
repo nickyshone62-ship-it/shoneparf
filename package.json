@@ -1,10 +1,6 @@
 {
   "name": "shone-parfumerie",
-  "version": "46.0.0",
+  "version": "47.0.0",
   "private": true,
-  "description": "Boutique en ligne officielle SHONE PARFUMERIE",
-  "scripts": {
-    "build": "echo 'Static build successful'",
-    "start": "echo 'Static app active'"
-  }
+  "description": "Boutique en ligne officielle SHONE PARFUMERIE"
 }
