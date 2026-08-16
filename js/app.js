@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v62.0_predefined_whatsapp_reply_engine';
+  const CURRENT_APP_VERSION = 'v63.0_admin_official_review_reply_engine';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -257,12 +257,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const initial = rev.authorName ? rev.authorName.charAt(0).toUpperCase() : 'S';
       const starsHtml = '★'.repeat(rev.stars || 5) + '☆'.repeat(5 - (rev.stars || 5));
 
+      const adminReplyHtml = rev.replyText ? `
+        <div class="review-admin-reply" style="margin-top: 14px; background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold-primary); padding: 10px 12px; border-radius: 8px; font-size: 0.85rem;">
+          <div style="font-weight: 700; color: var(--gold-light); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+            <i class="fas fa-reply text-gold-gradient"></i> Réponse de Shone Parfumerie :
+          </div>
+          <div style="color: var(--text-main); font-style: normal;">"${rev.replyText}"</div>
+        </div>
+      ` : '';
+
       return `
         <div class="review-card">
           <i class="fas fa-quote-right review-quote-icon"></i>
           <div class="review-stars">${starsHtml}</div>
           <p class="review-text">"${rev.text}"</p>
-          <div class="review-footer">
+          ${adminReplyHtml}
+          <div class="review-footer" style="margin-top: 16px;">
             <div class="review-avatar">${initial}</div>
             <div>
               <div class="review-author-name">${rev.authorName}</div>
@@ -1090,6 +1100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAdminOrdersTable(allOrders);
     renderAdminInboxTable(allInboxMessages);
     renderAdminProductsTable(allProducts);
+    renderAdminReviewsTable(allReviews);
   }
 
   function renderAdminStats() {
@@ -1313,11 +1324,149 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tab-btn-orders').classList.remove('active');
     document.getElementById('tab-btn-inbox').classList.remove('active');
     document.getElementById('tab-btn-products').classList.remove('active');
+    const revTabBtn = document.getElementById('tab-btn-reviews');
+    if (revTabBtn) revTabBtn.classList.remove('active');
 
     document.getElementById(tabId).style.display = 'block';
     if (tabId === 'orders-tab') document.getElementById('tab-btn-orders').classList.add('active');
     if (tabId === 'inbox-tab') document.getElementById('tab-btn-inbox').classList.add('active');
     if (tabId === 'products-tab') document.getElementById('tab-btn-products').classList.add('active');
+    if (tabId === 'reviews-tab' && revTabBtn) revTabBtn.classList.add('active');
+  };
+
+  // --------------------------------------------------------------------------
+  // ADMIN REVIEWS MANAGEMENT & OFFICIAL REPLIES ENGINE
+  // --------------------------------------------------------------------------
+  function renderAdminReviewsTable(reviews) {
+    const tbody = document.getElementById('admin-reviews-tbody');
+    if (!tbody) return;
+
+    if (!reviews || reviews.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucun avis enregistré.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = reviews.map(rev => {
+      const starsHtml = '★'.repeat(rev.stars || 5) + '☆'.repeat(5 - (rev.stars || 5));
+      const escapedAuthor = (rev.authorName || 'Client').replace(/'/g, "\\'");
+      const escapedPerfume = (rev.perfume || 'Parfum').replace(/'/g, "\\'");
+      const escapedText = (rev.text || '').replace(/'/g, "\\'");
+
+      const replyHtml = rev.replyText ? `
+        <div style="background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold-primary); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; color: var(--gold-light);">
+          <strong>Réponse officielle :</strong> "${rev.replyText}"
+        </div>
+      ` : `<span style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">Aucune réponse publiée</span>`;
+
+      return `
+        <tr style="border-bottom: 1px solid var(--border-dark);">
+          <td style="padding: 14px;"><strong style="color: var(--gold-light);">${rev.authorName}</strong><br/><span style="font-size: 0.8rem; color: var(--text-muted);">${rev.city || ''}</span></td>
+          <td style="padding: 14px;"><span style="color: var(--gold-primary); font-weight: 700;">${rev.perfume}</span></td>
+          <td style="padding: 14px; color: #F59E0B;">${starsHtml}</td>
+          <td style="padding: 14px; font-size: 0.88rem; max-width: 260px; line-height: 1.5; font-style: italic;">"${rev.text}"</td>
+          <td style="padding: 14px; max-width: 280px;">${replyHtml}</td>
+          <td style="padding: 14px;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn btn-gold" style="padding: 6px 12px; font-size: 0.8rem;" onclick="window.openAdminReviewReplyModal('${rev.id}', '${escapedAuthor}', '${escapedPerfume}', '${escapedText}')">
+                <i class="fas fa-reply"></i> Répondre / Modifier
+              </button>
+              <button class="btn btn-outline" style="padding: 6px 10px; font-size: 0.8rem; border-color: var(--accent-danger); color: var(--accent-danger);" onclick="window.deleteCustomerReview('${rev.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  let currentReplyingReviewId = null;
+  let currentReplyingAuthor = '';
+  let currentReplyingPerfume = '';
+
+  window.openAdminReviewReplyModal = function(reviewId, authorName, perfume, text) {
+    currentReplyingReviewId = reviewId;
+    currentReplyingAuthor = authorName;
+    currentReplyingPerfume = perfume;
+
+    const idInp = document.getElementById('admin-reply-review-id');
+    if (idInp) idInp.value = reviewId;
+
+    const infoElem = document.getElementById('admin-rev-dest-info');
+    if (infoElem) {
+      infoElem.innerHTML = `Avis de : <strong style="color: var(--gold-light);">${authorName}</strong> sur <strong style="color: var(--gold-primary);">${perfume}</strong>`;
+    }
+
+    const prevBox = document.getElementById('admin-rev-preview-box');
+    if (prevBox) {
+      prevBox.innerHTML = `"${text}"`;
+    }
+
+    const review = allReviews.find(r => r.id === reviewId);
+    const txtArea = document.getElementById('admin-rev-reply-textarea');
+    if (txtArea) {
+      txtArea.value = (review && review.replyText) ? review.replyText : '';
+    }
+
+    const selectElem = document.getElementById('admin-rev-template-select');
+    if (selectElem) selectElem.value = (review && review.replyText) ? "custom" : "1";
+
+    if (!review || !review.replyText) {
+      window.applyAdminRevTemplate("1");
+    }
+
+    openModal('admin-review-reply-modal');
+  };
+
+  window.applyAdminRevTemplate = function(templateId) {
+    const txtArea = document.getElementById('admin-rev-reply-textarea');
+    if (!txtArea) return;
+
+    const name = currentReplyingAuthor || 'Client';
+    const perfume = currentReplyingPerfume || 'parfum';
+
+    if (templateId === "1") {
+      txtArea.value = `Merci beaucoup ${name} pour votre confiance ! Nous sommes ravis que le parfum ${perfume} vous plaise et nous vous souhaitons une excellente journée chez Shone Parfumerie.`;
+    } else if (templateId === "2") {
+      txtArea.value = `Un grand merci ${name} ! La tenue et l'élégance de nos parfums sont notre plus grande fierté chez Shone Parfumerie.`;
+    } else if (templateId === "3") {
+      txtArea.value = `Merci ${name} pour votre retour si chaleureux ! Nous restons à votre entière disposition pour vos prochaines commandes.`;
+    } else if (templateId === "4") {
+      txtArea.value = `Ravi(e) que la livraison rapide et la qualité du parfum ${perfume} vous apportent entière satisfaction ! À très bientôt chez Shone Parfumerie.`;
+    }
+  };
+
+  window.saveAdminReviewReplySubmit = function(e) {
+    if (e) e.preventDefault();
+    const reviewId = document.getElementById('admin-reply-review-id').value || currentReplyingReviewId;
+    const replyText = document.getElementById('admin-rev-reply-textarea').value.trim();
+
+    if (!replyText) {
+      alert("Veuillez saisir votre réponse officielle.");
+      return;
+    }
+
+    const review = allReviews.find(r => r.id === reviewId);
+    if (review) {
+      review.replyText = replyText;
+      review.replyDate = new Date().toISOString().slice(0, 10);
+      localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
+
+      renderCustomerReviews();
+      loadAdminData();
+
+      closeModal('admin-review-reply-modal');
+      alert(`✓ Votre réponse officielle a bien été publiée sous l'avis de "${currentReplyingAuthor}" sur la boutique !`);
+    }
+  };
+
+  window.deleteCustomerReview = function(reviewId) {
+    if (confirm("Voulez-vous vraiment supprimer cet avis de la boutique ?")) {
+      allReviews = allReviews.filter(r => r.id !== reviewId);
+      localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
+      renderCustomerReviews();
+      loadAdminData();
+    }
   };
 
   // --------------------------------------------------------------------------

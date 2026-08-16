@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v62_full_purge';
+        var vKey = 'shone_v63_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v62_PREDEFINED_WA" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v63_REVIEW_REPLIES" />
 </head>
 <body>
 
@@ -516,6 +516,9 @@
         <button class="filter-pill" id="tab-btn-products" onclick="switchAdminTab('products-tab')">
           <i class="fas fa-bottle-droplet"></i> Produits & Fiches
         </button>
+        <button class="filter-pill" id="tab-btn-reviews" onclick="switchAdminTab('reviews-tab')">
+          <i class="fas fa-comments"></i> Avis Clients & Réponses Admin
+        </button>
       </div>
 
       <!-- TAB 1: COMMANDES -->
@@ -589,12 +592,38 @@
                 <th style="padding: 14px;">Photo</th>
                 <th style="padding: 14px;">Nom du Parfum</th>
                 <th style="padding: 14px;">Genre</th>
-                <th style="padding: 14px;">Style Olfactif</th>
-                <th style="padding: 14px;">Prix</th>
+                <th style="padding: 14px;">Style</th>
+                <th style="padding: 14px;">Prix FCFA</th>
                 <th style="padding: 14px;">Actions</th>
               </tr>
             </thead>
             <tbody id="admin-products-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB REVIEWS: GESTION DES AVIS CLIENTS ET RÉPONSES ADMIN -->
+      <div id="reviews-tab" class="admin-tab-content" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3 style="font-family: var(--font-heading); color: var(--gold-light);">Avis Clients & Réponses de la Boutique</h3>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Répondez officiellement aux avis de vos clients pour qu'ils s'affichent sur le site</span>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-dark);">
+            <thead>
+              <tr style="background: var(--bg-surface); color: var(--gold-primary); font-family: var(--font-heading); font-size: 0.85rem; text-transform: uppercase;">
+                <th style="padding: 14px;">Auteur & Ville</th>
+                <th style="padding: 14px;">Parfum</th>
+                <th style="padding: 14px;">Note</th>
+                <th style="padding: 14px;">Avis Client</th>
+                <th style="padding: 14px;">Réponse Officielle Shone</th>
+                <th style="padding: 14px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reviews-tbody">
               <!-- Rendered via JS -->
             </tbody>
           </table>
@@ -1034,6 +1063,49 @@
     </div>
   </div>
 
+  <!-- MODAL: RÉPONDRE À UN AVIS CLIENT (ADMIN) -->
+  <div class="modal-overlay" id="admin-review-reply-modal">
+    <div class="modal-card" style="max-width: 620px;">
+      <button class="modal-close" onclick="closeModal('admin-review-reply-modal')"><i class="fas fa-times"></i></button>
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(212, 175, 55, 0.15); color: var(--gold-primary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 12px auto; border: 1px solid var(--gold-primary);">
+          <i class="fas fa-reply"></i>
+        </div>
+        <h2 style="font-family: var(--font-heading); color: var(--gold-light); font-size: 1.5rem;">Répondre à l'Avis Client</h2>
+        <p id="admin-rev-dest-info" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;"></p>
+      </div>
+
+      <!-- APERÇU DE L'AVIS CLIENT -->
+      <div id="admin-rev-preview-box" style="background: var(--bg-surface); border: 1px solid var(--border-gold); padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px; font-style: italic; color: var(--text-main); font-size: 0.95rem; line-height: 1.6;">
+      </div>
+
+      <form onsubmit="if(window.saveAdminReviewReplySubmit) window.saveAdminReviewReplySubmit(event);">
+        <input type="hidden" id="admin-reply-review-id" />
+
+        <div class="form-group">
+          <label class="form-label"><i class="fas fa-list-check text-gold-gradient"></i> Choisir une Réponse Prédéfinie Shone Parfumerie :</label>
+          <select id="admin-rev-template-select" class="form-control" onchange="if(window.applyAdminRevTemplate) window.applyAdminRevTemplate(this.value);" style="font-weight: 600;">
+            <option value="1">1. Remerciements chaleureux ("Merci beaucoup pour votre confiance...")</option>
+            <option value="2">2. Fierté de la tenue & élégance ("La tenue et l'élégance de nos parfums...")</option>
+            <option value="3">3. Fidélisation ("Nous restons à votre entière disposition...")</option>
+            <option value="4">4. Satisfaction livraison & qualité ("Ravi(e) que la livraison rapide...")</option>
+            <option value="custom">5. Message Personnalisé (Rédiger librement)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"><i class="fas fa-pen-to-square text-gold-gradient"></i> Votre Réponse Officielle (S'affiche sous l'avis sur la boutique) :</label>
+          <textarea id="admin-rev-reply-textarea" class="form-control" rows="4" required style="line-height: 1.6; font-size: 0.95rem;"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 14px; font-size: 1.05rem;">
+          <i class="fas fa-paper-plane"></i> Publier la Réponse Officielle sur la Boutique
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL: DÉTAIL DU PRODUIT -->
   <div class="modal-overlay" id="product-modal">
     <div class="modal-card">
@@ -1256,8 +1328,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v62_PREDEFINED_WA"></script>
-  <script src="js/supabase.js?v=20260816_v62_PREDEFINED_WA"></script>
-  <script src="js/app.js?v=20260816_v62_PREDEFINED_WA"></script>
+  <script src="js/products.js?v=20260816_v63_REVIEW_REPLIES"></script>
+  <script src="js/supabase.js?v=20260816_v63_REVIEW_REPLIES"></script>
+  <script src="js/app.js?v=20260816_v63_REVIEW_REPLIES"></script>
 </body>
 </html>
