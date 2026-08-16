@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v57_full_purge';
+        var vKey = 'shone_v58_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260816_v57_NETLIFY" />
+  <link rel="stylesheet" href="css/style.css?v=20260816_v58_HORIZONTAL_REVIEWS" />
 </head>
 <body>
 
@@ -293,13 +293,22 @@
             <p class="section-desc" style="margin-bottom: 0;">Découvrez l'expérience de nos passionnés de parfums à travers le Burkina Faso.</p>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 16px;">
-            <div style="background: var(--bg-card); border: 1px solid var(--border-gold); padding: 12px 20px; border-radius: var(--radius-md); text-align: center;">
-              <div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 900; color: var(--gold-light);">4.9 / 5 ⭐</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Satisfaction Client</div>
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-gold); padding: 10px 18px; border-radius: var(--radius-md); text-align: center;">
+              <div style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 900; color: var(--gold-light);">4.9 / 5 ⭐</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Satisfaction Client</div>
             </div>
 
-            <button class="btn btn-gold" onclick="openModal('add-review-modal')" style="padding: 12px 24px; font-size: 0.95rem;">
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline" style="padding: 10px 14px; font-size: 0.9rem;" onclick="document.getElementById('reviews-cards-container').scrollBy({left: -360, behavior: 'smooth'})" title="Avis précédents">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="btn btn-outline" style="padding: 10px 14px; font-size: 0.9rem;" onclick="document.getElementById('reviews-cards-container').scrollBy({left: 360, behavior: 'smooth'})" title="Avis suivants">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <button class="btn btn-gold" onclick="openModal('add-review-modal')" style="padding: 10px 20px; font-size: 0.9rem;">
               <i class="fas fa-pen-to-square"></i> Donner mon Avis
             </button>
           </div>
@@ -1151,8 +1160,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260816_v57_NETLIFY"></script>
-  <script src="js/supabase.js?v=20260816_v57_NETLIFY"></script>
-  <script src="js/app.js?v=20260816_v57_NETLIFY"></script>
+  <script src="js/products.js?v=20260816_v58_HORIZONTAL_REVIEWS"></script>
+  <script src="js/supabase.js?v=20260816_v58_HORIZONTAL_REVIEWS"></script>
+  <script src="js/app.js?v=20260816_v58_HORIZONTAL_REVIEWS"></script>
 </body>
 </html>
