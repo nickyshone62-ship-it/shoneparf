@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v36.0_reserve_perfume_added';
+  const CURRENT_APP_VERSION = 'v37.0_reserve_rebuilt_verification';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
