@@ -5,29 +5,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Colors */
-  --bg-dark: #0A0A0D;
-  --bg-card: #121217;
-  --bg-card-hover: #191920;
-  --bg-surface: #181820;
-  --bg-glass: rgba(18, 18, 23, 0.85);
+  /* Colors - Theme Saphir Nuit & Or Pur */
+  --bg-dark: #060913;
+  --bg-card: #0F172A;
+  --bg-card-hover: #172554;
+  --bg-surface: #111C35;
+  --bg-glass: rgba(15, 23, 42, 0.88);
 
   --gold-primary: #D4AF37;
   --gold-light: #F3E5AB;
   --gold-dark: #A67C1E;
   --gold-gradient: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #997A15 100%);
-  --gold-glow: rgba(212, 175, 55, 0.25);
+  --gold-glow: rgba(212, 175, 55, 0.3);
+
+  --sapphire-accent: #2563EB;
+  --sapphire-light: #60A5FA;
+  --sapphire-glow: rgba(37, 99, 235, 0.35);
+  --sapphire-gold-gradient: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 40%, #2563EB 100%);
   
   --text-main: #FAF9F5;
-  --text-muted: #A0A0AA;
+  --text-muted: #94A3B8;
   --text-gold: #E6CA65;
 
   --accent-success: #10B981;
   --accent-whatsapp: #25D366;
   --accent-danger: #EF4444;
 
-  --border-dark: rgba(255, 255, 255, 0.08);
-  --border-gold: rgba(212, 175, 55, 0.3);
+  --border-dark: rgba(59, 130, 246, 0.18);
+  --border-gold: rgba(212, 175, 55, 0.4);
 
   /* Fonts */
   --font-heading: 'Cinzel', serif;
@@ -42,8 +47,8 @@
   --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
-  --shadow-gold: 0 10px 30px -10px rgba(212, 175, 55, 0.3);
-  --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 10px 30px -10px rgba(212, 175, 55, 0.35), 0 0 20px rgba(37, 99, 235, 0.2);
+  --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.7);
 }
 
 /* Base reset */
@@ -60,6 +65,10 @@ html {
 
 body {
   background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(circle at 20% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 80% 65%, rgba(212, 175, 55, 0.08) 0%, transparent 45%);
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-body);
   line-height: 1.6;
