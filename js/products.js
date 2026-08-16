@@ -123,6 +123,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/charuto-tobacco-vanille.png",
     description: "Un parfum de caractère, riche et imposant. Une alliance envoûtante entre la chaleur d'un tabac d'exception et la gourmandise du chocolat, de la vanille, du raisin et des fruits secs. Suave, sexy et raffiné comme un hôtel 4 étoiles, il impose une présence inoubliable."
+  },
+  {
+    id: "prod-12",
+    name: "Marshmallow Blush",
+    gender: "femme",
+    genderLabel: "Femme",
+    style: "Séduisant",
+    price: 25000,
+    size: "100 ml",
+    image: "images/marshmallow-blush.png",
+    description: "Une gourmandise féminine irrésistible et câline. Une ouverture fruitée et pétillante de fraise et framboise, évoluant vers un cœur floral délicat, sur un fond de guimauve crémeuse et musc doux. Sucré, tendre, élégant et hautement addictif."
   }
 ];
 
