@@ -3,8 +3,8 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & VERCEL DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v56.0_zero_barrier_instant_access';
+  // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
+  const CURRENT_APP_VERSION = 'v57.0_netlify_official_deploy';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
