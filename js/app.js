@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v65.0_direct_platform_orders_and_global_cloud_sync';
+  const CURRENT_APP_VERSION = 'v66.0_realtime_cloud_db_reviews_and_orders_sync';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -1482,6 +1482,10 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCustomerReviews();
       loadAdminData();
 
+      if (window.ShoneCloudSync) {
+        window.ShoneCloudSync.saveAllReviews(allReviews);
+      }
+
       closeModal('admin-review-reply-modal');
       alert(`✓ Votre réponse officielle a bien été publiée sous l'avis de "${currentReplyingAuthor}" sur la boutique !`);
     }
@@ -1520,6 +1524,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       renderCustomerReviews();
       loadAdminData();
+
+      if (window.ShoneCloudSync) {
+        window.ShoneCloudSync.saveAllReviews(allReviews);
+      }
 
       closeModal('admin-review-reply-modal');
 
@@ -1563,4 +1571,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // AUTO-POLLING CLOUD SYNC EVERY 10 SECONDS (REALTIME FOR ADMIN)
+  setInterval(() => {
+    if (window.ShoneCloudSync) {
+      window.ShoneCloudSync.pullAllData().then(() => {
+        allReviews = JSON.parse(localStorage.getItem('shone_reviews')) || defaultReviews;
+        allOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
+        allInboxMessages = JSON.parse(localStorage.getItem('shone_inbox')) || [];
+        renderCustomerReviews();
+        if (document.getElementById('admin-view') && document.getElementById('admin-view').style.display !== 'none') {
+          renderAdminStats();
+          renderAdminOrdersTable(allOrders);
+          renderAdminInboxTable(allInboxMessages);
+          renderAdminProductsTable(allProducts);
+          renderAdminReviewsTable(allReviews);
+        }
+      });
+    }
+  }, 10000);
 });

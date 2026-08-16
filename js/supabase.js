@@ -1,138 +1,143 @@
 /* ==========================================================================
-   SHONE PARFUMERIE - SUPABASE & GLOBAL CLOUD SYNC ENGINE (REVIEWS, ORDERS & MESSAGES)
+   SHONE PARFUMERIE - GLOBAL REAL-TIME CLOUD DB ENGINE (REVIEWS, ORDERS & MESSAGES)
    ========================================================================== */
 
-// Supabase Credentials
-const SUPABASE_URL = window.SUPABASE_URL || "https://your-supabase-project.supabase.co";
-const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || "your-anon-key";
+const REVIEWS_CLOUD_ID = "ff8081819ff5b11001a00c751a4f2fb9";
+const ORDERS_CLOUD_ID = "ff8081819ff5b11001a00c767b562fbd";
+const INBOX_CLOUD_ID = "ff8081819ff5b11001a00c767d962fbe";
 
-let supabaseClient = null;
-
-if (typeof supabase !== 'undefined' && SUPABASE_URL !== "https://your-supabase-project.supabase.co") {
-  try {
-    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log("Shone Parfumerie: Connecté avec succès à Supabase.");
-  } catch (e) {
-    console.warn("Supabase init info:", e);
-  }
-}
-
-// --------------------------------------------------------------------------
-// GLOBAL CLOUD RELAY (SYNCHRONISATION MULTI-APPAREILS SANS SERVEUR COMPLEXE)
-// --------------------------------------------------------------------------
-const GLOBAL_CLOUD_ENDPOINT = "https://api.kvdb.io/shone_parfumerie_store_2026";
+const CLOUD_BASE_URL = "https://api.restful-api.dev/objects";
 
 const ShoneCloudSync = {
-  // 1. Synchroniser et pousser un nouvel avis client dans le Cloud
+  // 1. Pousser un avis client dans le Cloud en temps réel (Accessible par l'Administrateur)
   async pushReview(reviewObj) {
     try {
-      if (supabaseClient) {
-        await supabaseClient.from('reviews').insert([reviewObj]);
-      }
-      const existingReviews = await this.fetchCloudArray('reviews');
-      existingReviews.unshift(reviewObj);
-      await this.saveCloudArray('reviews', existingReviews);
+      const currentReviews = await this.fetchCloudCategory(REVIEWS_CLOUD_ID, 'reviews');
+      // Éviter les doublons par ID
+      const filtered = currentReviews.filter(r => r.id !== reviewObj.id);
+      filtered.unshift(reviewObj);
+      await this.updateCloudCategory(REVIEWS_CLOUD_ID, 'shone_parfumerie_reviews', 'reviews', filtered);
     } catch (err) {
-      console.log("Push review cloud info:", err);
+      console.log("Cloud review sync info:", err);
     }
   },
 
-  // 2. Synchroniser et pousser une nouvelle commande client dans le Cloud
-  async pushOrder(orderObj) {
-    try {
-      if (supabaseClient) {
-        await supabaseClient.from('orders').insert([orderObj]);
-      }
-      const existingOrders = await this.fetchCloudArray('orders');
-      existingOrders.unshift(orderObj);
-      await this.saveCloudArray('orders', existingOrders);
-    } catch (err) {
-      console.log("Push order cloud info:", err);
-    }
-  },
-
-  // 3. Synchroniser et pousser un nouveau message client dans le Cloud
-  async pushInboxMessage(msgObj) {
-    try {
-      if (supabaseClient) {
-        await supabaseClient.from('messages').insert([msgObj]);
-      }
-      const existingMsgs = await this.fetchCloudArray('inbox');
-      existingMsgs.unshift(msgObj);
-      await this.saveCloudArray('inbox', existingMsgs);
-    } catch (err) {
-      console.log("Push inbox cloud info:", err);
-    }
-  },
-
-  // 4. Mettre à jour l'ensemble des données dans le Cloud (ex: réponse admin aux avis)
+  // 2. Sauvegarder l'ensemble des avis (ex: lors d'une réponse officielle de l'admin)
   async saveAllReviews(reviewsArray) {
     try {
-      await this.saveCloudArray('reviews', reviewsArray);
-    } catch (err) {}
+      await this.updateCloudCategory(REVIEWS_CLOUD_ID, 'shone_parfumerie_reviews', 'reviews', reviewsArray);
+    } catch (err) {
+      console.log("Cloud all reviews save info:", err);
+    }
   },
 
-  // 5. Récupérer et fusionner toutes les données du Cloud vers le device Admin / Client
+  // 3. Pousser une nouvelle commande dans le Cloud
+  async pushOrder(orderObj) {
+    try {
+      const currentOrders = await this.fetchCloudCategory(ORDERS_CLOUD_ID, 'orders');
+      const filtered = currentOrders.filter(o => o.orderNumber !== orderObj.orderNumber);
+      filtered.unshift(orderObj);
+      await this.updateCloudCategory(ORDERS_CLOUD_ID, 'shone_parfumerie_orders', 'orders', filtered);
+    } catch (err) {
+      console.log("Cloud order sync info:", err);
+    }
+  },
+
+  // 4. Pousser un nouveau message / demande dans le Cloud
+  async pushInboxMessage(msgObj) {
+    try {
+      const currentMsgs = await this.fetchCloudCategory(INBOX_CLOUD_ID, 'inbox');
+      const filtered = currentMsgs.filter(m => m.id !== msgObj.id);
+      filtered.unshift(msgObj);
+      await this.updateCloudCategory(INBOX_CLOUD_ID, 'shone_parfumerie_inbox', 'inbox', filtered);
+    } catch (err) {
+      console.log("Cloud inbox sync info:", err);
+    }
+  },
+
+  // 5. Récupérer et fusionner toutes les données du Cloud vers l'appareil Administrateur
   async pullAllData() {
     try {
       // Pull Reviews
-      const cloudReviews = await this.fetchCloudArray('reviews');
+      const cloudReviews = await this.fetchCloudCategory(REVIEWS_CLOUD_ID, 'reviews');
       if (Array.isArray(cloudReviews) && cloudReviews.length > 0) {
         let localReviews = JSON.parse(localStorage.getItem('shone_reviews')) || [];
-        const mergedReviews = this.mergeArraysById(localReviews, cloudReviews);
+        const mergedReviews = this.mergeArrays(localReviews, cloudReviews, 'id');
         localStorage.setItem('shone_reviews', JSON.stringify(mergedReviews));
       }
 
       // Pull Orders
-      const cloudOrders = await this.fetchCloudArray('orders');
+      const cloudOrders = await this.fetchCloudCategory(ORDERS_CLOUD_ID, 'orders');
       if (Array.isArray(cloudOrders) && cloudOrders.length > 0) {
         let localOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
-        const mergedOrders = this.mergeArraysById(localOrders, cloudOrders, 'orderNumber');
+        const mergedOrders = this.mergeArrays(localOrders, cloudOrders, 'orderNumber');
         localStorage.setItem('shone_orders', JSON.stringify(mergedOrders));
       }
 
-      // Pull Inbox Messages
-      const cloudInbox = await this.fetchCloudArray('inbox');
+      // Pull Inbox
+      const cloudInbox = await this.fetchCloudCategory(INBOX_CLOUD_ID, 'inbox');
       if (Array.isArray(cloudInbox) && cloudInbox.length > 0) {
         let localInbox = JSON.parse(localStorage.getItem('shone_inbox')) || [];
-        const mergedInbox = this.mergeArraysById(localInbox, cloudInbox);
+        const mergedInbox = this.mergeArrays(localInbox, cloudInbox, 'id');
         localStorage.setItem('shone_inbox', JSON.stringify(mergedInbox));
       }
     } catch (err) {
-      console.log("Pull cloud data info:", err);
+      console.log("Pull all cloud data info:", err);
     }
   },
 
-  // Helpers HTTP
-  async fetchCloudArray(key) {
+  // HTTP HELPERS WITH CORS & HEADERS
+  async fetchCloudCategory(objectId, categoryKey) {
     try {
-      const res = await fetch(`${GLOBAL_CLOUD_ENDPOINT}/${key}`, { cache: 'no-cache' });
+      const res = await fetch(`${CLOUD_BASE_URL}/${objectId}`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        cache: 'no-cache'
+      });
       if (res.ok) {
-        const text = await res.text();
-        return text ? JSON.parse(text) : [];
+        const json = await res.json();
+        if (json && json.data && Array.isArray(json.data[categoryKey])) {
+          return json.data[categoryKey];
+        }
       }
     } catch (e) {}
     return [];
   },
 
-  async saveCloudArray(key, arrayData) {
+  async updateCloudCategory(objectId, name, categoryKey, dataArray) {
     try {
-      await fetch(`${GLOBAL_CLOUD_ENDPOINT}/${key}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(arrayData.slice(0, 50)) // max 50 items per category
+      // Keep up to 60 most recent records per category
+      const trimmed = dataArray.slice(0, 60);
+      const payload = {
+        name: name,
+        data: {
+          [categoryKey]: trimmed
+        }
+      };
+      await fetch(`${CLOUD_BASE_URL}/${objectId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
     } catch (e) {}
   },
 
-  mergeArraysById(localArr, cloudArr, keyField = 'id') {
+  mergeArrays(localArr, cloudArr, keyField = 'id') {
     const map = new Map();
-    [...cloudArr, ...localArr].forEach(item => {
+    // Put cloud items first
+    cloudArr.forEach(item => {
+      if (item && item[keyField]) map.set(item[keyField], item);
+    });
+    // Merge local items
+    localArr.forEach(item => {
       if (item && item[keyField]) {
         if (!map.has(item[keyField])) {
           map.set(item[keyField], item);
         } else {
-          // Merge replyText if present
+          // If local has replyText, keep replyText
           const existing = map.get(item[keyField]);
           map.set(item[keyField], { ...existing, ...item });
         }
