@@ -1,18 +1,18 @@
 /* ==========================================================================
-   SHONE PARFUMERIE - PRODUCTS & ZONES DATA (RESTORED COMPLETE CATALOG)
+   SHONE PARFUMERIE - PRODUCTS & ZONES DATA (INTENSE WAYFARER / ROYAL IMPERIAL)
    ========================================================================== */
 
 const PRODUCTS_DATA = [
   {
     id: "prod-1",
-    name: "Royal Oud Impérial",
+    name: "Intense Wayfarer",
     gender: "homme",
     genderLabel: "Homme",
     style: "Puissant",
     price: 35000,
     size: "100 ml",
     image: "images/royal-oud.png",
-    description: "Une création d'exception dominée par le bois d'Oud le plus rare, magnifié par des notes de cuir et d'ambre précieux. Parfum intense pour homme affirmé."
+    description: "Une création d'exception Intense Wayfarer dominée par le bois d'Oud le plus rare, magnifié par des notes de cuir et d'ambre précieux. Parfum intense pour homme affirmé."
   },
   {
     id: "prod-2",
@@ -71,14 +71,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-7",
-    name: "Intense Wayfarer",
+    name: "Aurelia Paris",
     gender: "femme",
     genderLabel: "Femme",
     style: "Séduisant",
     price: 32000,
     size: "100 ml",
     image: "images/aurelia.png",
-    description: "La signature emblématique d'Intense Wayfarer. Une création d'or précieuse aux notes d'ambre oriental, d'agrumes ensoleillés et de bois précieux. Sillage irrésistible."
+    description: "La signature emblématique d'Aurelia Paris. Une création d'or précieuse aux notes d'ambre oriental, d'agrumes ensoleillés et de bois précieux. Sillage irrésistible."
   },
   {
     id: "prod-8",
