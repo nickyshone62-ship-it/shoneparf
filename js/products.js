@@ -60,14 +60,14 @@ const PRODUCTS_DATA = [
   },
   {
     id: "prod-6",
-    name: "Amber Solide d'Orient",
+    name: "Intense Noir",
     gender: "homme",
     genderLabel: "Homme",
-    style: "Puissant",
-    price: 30000,
+    style: "Séduisant",
+    price: 12000,
     size: "100 ml",
-    image: "images/amber-solide.png",
-    description: "Un ambre oriental chaleureux, puissant et enrobant avec des touches d'épices nobles. Une tenue magistrale pour toute la journée."
+    image: "images/intense-noir.png",
+    description: "Une fragrance irrésistiblement fruitée, douce et moelleuse. Sous ses airs mystérieux, ce parfum révèle un cœur fruité très séduisant et captivant. Une véritable empreinte gourmande et sexy."
   },
   {
     id: "prod-7",
