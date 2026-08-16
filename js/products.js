@@ -11,8 +11,8 @@ const PRODUCTS_DATA = [
     style: "Puissant",
     price: 35000,
     size: "100 ml",
-    image: "images/royal-oud.png",
-    description: "Une création d'exception Intense Wayfarer dominée par le bois d'Oud le plus rare, magnifié par des notes de cuir et d'ambre précieux. Parfum intense pour homme affirmé."
+    image: "images/intense-wayfarer.png",
+    description: "Une création d'exception Intense Wayfarer dominée par des notes d'Oud précieux, magnifiée par des accords boisés et ambrés. Flacon d'exception noir mat."
   },
   {
     id: "prod-2",
