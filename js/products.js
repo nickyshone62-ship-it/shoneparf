@@ -185,7 +185,7 @@ const PRODUCTS_DATA = [
     gender: "femme",
     genderLabel: "Femme",
     style: "Doux",
-    price: 25000,
+    price: 10000,
     size: "100 ml",
     image: "images/eclair.png",
     description: "Une gourmandise lactée et vanillée absolument irrésistible. Un mélange somptueux de caramel fondant, vanille crémeuse, lait chaud et miel doré qui enveloppe la peau d'un voile doux, captivant et hautement séduisant."
