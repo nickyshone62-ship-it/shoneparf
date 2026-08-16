@@ -112,6 +112,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/vanille-en-tobacco.png",
     description: "Une signature olfactive intense, mature et affirmation de soi. Une ouverture épicée et corsée portée par le poivre noir, le cacao brut, le tabac et les fruits secs, qui s'adoucit vers un cœur très crémeux et vanillé. Un parfum puissant et charismatique."
+  },
+  {
+    id: "prod-11",
+    name: "Charuto Tobacco Vanille",
+    gender: "homme",
+    genderLabel: "Homme",
+    style: "Séduisant",
+    price: 12000,
+    size: "100 ml",
+    image: "images/charuto-tobacco-vanille.png",
+    description: "Un parfum de caractère, riche et imposant. Une alliance envoûtante entre la chaleur d'un tabac d'exception et la gourmandise du chocolat, de la vanille, du raisin et des fruits secs. Suave, sexy et raffiné comme un hôtel 4 étoiles, il impose une présence inoubliable."
   }
 ];
 
