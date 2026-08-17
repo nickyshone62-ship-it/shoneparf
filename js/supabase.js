@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    SHONE PARFUMERIE - GLOBAL REAL-TIME CLOUD DB ENGINE (REVIEWS, ORDERS & MESSAGES)
    ========================================================================== */
 
@@ -9,11 +9,11 @@ const INBOX_CLOUD_ID = "ff8081819ff5b11001a00c767d962fbe";
 const CLOUD_BASE_URL = "https://api.restful-api.dev/objects";
 
 const ShoneCloudSync = {
-  // 1. Pousser un avis client dans le Cloud en temps réel (Accessible par l'Administrateur)
+  // 1. Pousser un avis client dans le Cloud en temps r�el (Accessible par l'Administrateur)
   async pushReview(reviewObj) {
     try {
       const currentReviews = await this.fetchCloudCategory(REVIEWS_CLOUD_ID, 'reviews');
-      // Éviter les doublons par ID
+      // �viter les doublons par ID
       const filtered = currentReviews.filter(r => r.id !== reviewObj.id);
       filtered.unshift(reviewObj);
       await this.updateCloudCategory(REVIEWS_CLOUD_ID, 'shone_parfumerie_reviews', 'reviews', filtered);
@@ -22,7 +22,7 @@ const ShoneCloudSync = {
     }
   },
 
-  // 2. Sauvegarder l'ensemble des avis (ex: lors d'une réponse officielle de l'admin)
+  // 2. Sauvegarder l'ensemble des avis (ex: lors d'une r�ponse officielle de l'admin)
   async saveAllReviews(reviewsArray) {
     try {
       await this.updateCloudCategory(REVIEWS_CLOUD_ID, 'shone_parfumerie_reviews', 'reviews', reviewsArray);
@@ -55,7 +55,7 @@ const ShoneCloudSync = {
     }
   },
 
-  // 5. Récupérer et fusionner toutes les données du Cloud vers l'appareil Administrateur
+  // 5. R�cup�rer et fusionner toutes les donn�es du Cloud vers l'appareil Administrateur
   async pullAllData() {
     try {
       // Pull Reviews
