@@ -199,7 +199,7 @@ const PRODUCTS_DATA = [
     price: 10000,
     size: "100 ml",
     image: "images/yara.png",
-    description: "Quand on parle de ce parfum, on en parle avec de la douceur, car c'est un parfum très féminin. Il est sucré, floral, avec des notes d'agrumes, de fruits tropicaux et de poudré. Flacon de 100 ml (existe aussi en coffret soin avec sa vaseline parfumée)."
+    description: "Quand on parle de ce parfum, on en parle avec de la douceur, car c'est un parfum très féminin. Il est sucré, floral, avec des notes d'agrumes, de fruits tropicaux et de poudré. Flacon de 100 ml."
   }
 ];
 
