@@ -189,6 +189,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/eclair.png",
     description: "La sensation gourmande et sucrée virale. Une fragrance réconfortante et irrésistible aux effluves de vanille onctueuse, de caramel fondant et de gâteau fraîchement sorti du four. Un véritable délice olfactif pour les amoureuses de parfums gourmands et enveloppants."
+  },
+  {
+    id: "prod-18",
+    name: "Yara",
+    gender: "femme",
+    genderLabel: "Femme",
+    style: "Doux",
+    price: 10000,
+    size: "100 ml",
+    image: "images/yara.png",
+    description: "Une fragrance féminine iconique et enveloppante. Un mélange gourmand, doux et poudré de fruits tropicaux, de vanille crémeuse et d'orchidées. Un véritable coup de cœur apprécié pour sa douceur et sa fraîcheur au quotidien."
   }
 ];
 

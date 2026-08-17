@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v75.0_active_order_whatsapp_button_unblocked';
+  const CURRENT_APP_VERSION = 'v76.0_added_milka_nikiema_authentic_customer_review';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -95,6 +95,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DEFAULT REVIEWS (BURKINA FASO & MALI)
   const defaultReviews = [
+    {
+      id: "rev-milka-1",
+      authorName: "Milka NIKIEMA",
+      city: "Ouagadougou",
+      perfume: "Yara",
+      stars: 3,
+      text: "C'est cool",
+      date: "2026-08-17"
+    },
     {
       id: "rev-1",
       authorName: "Aminata Kaboré",
