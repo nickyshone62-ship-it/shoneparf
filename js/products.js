@@ -195,11 +195,11 @@ const PRODUCTS_DATA = [
     name: "Yara",
     gender: "femme",
     genderLabel: "Femme",
-    style: "Doux",
+    style: "Doux & Sucré",
     price: 10000,
     size: "100 ml",
     image: "images/yara.png",
-    description: "Une fragrance féminine iconique et enveloppante. Un mélange gourmand, doux et poudré de fruits tropicaux, de vanille crémeuse et d'orchidées. Un véritable coup de cœur apprécié pour sa douceur et sa fraîcheur au quotidien."
+    description: "Quand on parle de ce parfum, on en parle avec de la douceur, car c'est un parfum très féminin. Il est sucré, floral, avec des notes d'agrumes, de fruits tropicaux et de poudré. Flacon de 100 ml (existe aussi en coffret soin avec sa vaseline parfumée)."
   }
 ];
 
