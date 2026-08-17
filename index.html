@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v74_full_purge';
+        var vKey = 'shone_v75_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260817_v74_INSTANT_WHATSAPP_REDIRECT" />
+  <link rel="stylesheet" href="css/style.css?v=20260817_v75_ACTIVE_BUTTON_UNBLOCKED" />
 </head>
 <body>
 
@@ -829,12 +829,12 @@
         <div id="delivery-details-box" style="background: var(--bg-dark); border: 1px solid var(--border-dark); padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px;">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label">Ville *</label>
-              <input type="text" id="direct-cust-city" class="form-control" placeholder="Ex: Ouagadougou / Bamako" value="Ouagadougou" required />
+              <label class="form-label">Ville</label>
+              <input type="text" id="direct-cust-city" class="form-control" placeholder="Ex: Ouagadougou / Bamako" value="Ouagadougou" />
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label">Quartier / Zone de livraison *</label>
-              <input type="text" id="direct-cust-neighborhood" class="form-control" placeholder="Ex: Karpala (Ouaga) ou ACI 2000 (Bamako)..." required />
+              <label class="form-label">Quartier / Zone de livraison</label>
+              <input type="text" id="direct-cust-neighborhood" class="form-control" placeholder="Ex: Karpala (Ouaga) ou ACI 2000 (Bamako)..." />
             </div>
           </div>
           <div style="font-size: 0.8rem; color: var(--gold-light); margin-top: 10px; display: flex; align-items: center; gap: 8px;">
@@ -891,9 +891,9 @@
           
           <div id="receipt-upload-box">
             <label class="form-label" style="font-size: 0.85rem; color: var(--gold-light); font-weight: 700;">
-              <i class="fas fa-camera text-gold-gradient"></i> Capture d'écran du paiement / Reçu <span style="color: var(--accent-danger); font-weight: 900;">(OBLIGATOIRE) *</span>
+              <i class="fas fa-camera text-gold-gradient"></i> Capture d'écran du paiement / Reçu <span style="color: var(--text-muted); font-size: 0.8rem;">(Optionnel)</span>
             </label>
-            <input type="file" id="direct-receipt-file" class="form-control" accept="image/*" onchange="handleReceiptSelect(event)" required />
+            <input type="file" id="direct-receipt-file" class="form-control" accept="image/*" onchange="handleReceiptSelect(event)" />
             <div id="receipt-file-name" style="font-size: 0.8rem; color: var(--accent-success); font-weight: 700; margin-top: 6px;"></div>
           </div>
         </div>
@@ -1346,8 +1346,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260817_v74_INSTANT_WHATSAPP_REDIRECT"></script>
-  <script src="js/supabase.js?v=20260817_v74_INSTANT_WHATSAPP_REDIRECT"></script>
-  <script src="js/app.js?v=20260817_v74_INSTANT_WHATSAPP_REDIRECT"></script>
+  <script src="js/products.js?v=20260817_v75_ACTIVE_BUTTON_UNBLOCKED"></script>
+  <script src="js/supabase.js?v=20260817_v75_ACTIVE_BUTTON_UNBLOCKED"></script>
+  <script src="js/app.js?v=20260817_v75_ACTIVE_BUTTON_UNBLOCKED"></script>
 </body>
 </html>

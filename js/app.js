@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v74.0_instant_whatsapp_redirection_location_href';
+  const CURRENT_APP_VERSION = 'v75.0_active_order_whatsapp_button_unblocked';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -606,7 +606,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
       uploadBox.style.display = 'block';
-      if (fileInp) fileInp.required = true;
     } else if (currentPaymentMethod === 'moov') {
       const ussdCode = `*555*2*1*${MOOV_NUMBER}*${totalAmount}#`;
       instrText.innerHTML = `
@@ -624,7 +623,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
       uploadBox.style.display = 'block';
-      if (fileInp) fileInp.required = true;
     } else if (currentPaymentMethod === 'wave') {
       const wavePhone = `+226 ${WAVE_NUMBER}`;
       instrText.innerHTML = `
@@ -640,11 +638,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
       uploadBox.style.display = 'block';
-      if (fileInp) fileInp.required = true;
     } else if (currentPaymentMethod === 'cash') {
       instrText.innerHTML = `<i class="fas fa-money-bill-wave" style="color: #10B981;"></i> <strong>Paiement en Espèces :</strong> Règlement à la livraison après contrôle de votre parfum ou lors du retrait en boutique.`;
       uploadBox.style.display = 'none';
-      if (fileInp) fileInp.required = false;
     }
   }
 
@@ -675,12 +671,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.submitDirectOrder = function(e) {
     e.preventDefault();
-    if (!currentOrderProduct) return;
-
-    if (['orange', 'moov', 'wave'].includes(currentPaymentMethod) && !uploadedReceiptBase64) {
-      alert("⚠️ La capture d'écran du paiement est OBLIGATOIRE ! Veuillez joindre la preuve de votre transfert Orange Money, Moov ou Wave.");
-      const fileInp = document.getElementById('direct-receipt-file');
-      if (fileInp) fileInp.focus();
+    if (!currentOrderProduct) {
+      alert("⚠️ Aucun parfum sélectionné.");
       return;
     }
 
@@ -688,6 +680,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const country = countryEl ? countryEl.value : 'Burkina Faso';
     const name = document.getElementById('direct-cust-name').value.trim();
     const phone = document.getElementById('direct-cust-phone').value.trim();
+
+    if (!name) {
+      alert("⚠️ Veuillez saisir votre Nom & Prénom.");
+      const elem = document.getElementById('direct-cust-name');
+      if (elem) elem.focus();
+      return;
+    }
+
+    if (!phone) {
+      alert("⚠️ Veuillez saisir votre Numéro WhatsApp.");
+      const elem = document.getElementById('direct-cust-phone');
+      if (elem) elem.focus();
+      return;
+    }
 
     const city = isDeliveryRequested ? (document.getElementById('direct-cust-city').value.trim() || (country === 'Mali' ? 'Bamako' : 'Ouagadougou')) : 'Retrait Boutique';
     const neighborhood = isDeliveryRequested ? document.getElementById('direct-cust-neighborhood').value.trim() : 'Point de vente';
