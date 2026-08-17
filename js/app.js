@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v69.0_secure_admin_login_no_password_hint';
+  const CURRENT_APP_VERSION = 'v70.0_100percent_platform_information_sync';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     closeModal('availability-modal');
-    alert(`✓ Merci ${name} ! Votre demande de disponibilité pour "${perfumeName}" a bien été transmise à Shone Parfumerie. Notre équipe vous répondra très rapidement sur WhatsApp (${phone}).`);
+    alert(`✓ Merci ${name} ! Votre demande de disponibilité pour le parfum "${perfumeName}" a été enregistrée avec succès sur la plateforme Shone Parfumerie ! L'administrateur a bien reçu votre demande.`);
     
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.ShoneCloudSync.pushInboxMessage(newMessage);
     }
 
-    alert(`✓ Merci ${name} ! Votre demande de Conseil Olfactif a été enregistrée avec succès sur notre plateforme. L'équipe Shone Parfumerie analysera vos critères et vous enverra sa recommandation sur WhatsApp (${phone}).`);
+    alert(`✓ Merci ${name} ! Votre demande de Conseil Olfactif a été enregistrée avec succès sur la plateforme Shone Parfumerie ! L'administrateur a bien reçu vos critères.`);
     
     document.getElementById('advisor-custom-form').reset();
 
