@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.setItem('shone_admin_logged', 'true');
         showMainScreen();
       } else {
-        alert("Mot de passe incorrect ! (Utilisez : shone2026)");
+        alert("Code d'accès incorrect ! Accès refusé.");
       }
     });
   }

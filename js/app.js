@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v68.0_pure_platform_messages_github_netlify';
+  const CURRENT_APP_VERSION = 'v69.0_secure_admin_login_no_password_hint';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -932,7 +932,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('admin-main-screen').style.display = 'block';
       loadAdminData();
     } else {
-      alert("Mot de passe incorrect ! (Utilisez : shone2026)");
+      alert("Code d'accès incorrect ! Accès refusé.");
     }
   };
 
