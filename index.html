@@ -16,7 +16,7 @@
   <script>
     (function() {
       try {
-        var vKey = 'shone_v72_full_purge';
+        var vKey = 'shone_v73_full_purge';
         if (localStorage.getItem('shone_app_version_tag') !== vKey) {
           localStorage.removeItem('shone_products');
           localStorage.removeItem('shone_reviews');
@@ -27,7 +27,7 @@
   </script>
 
   <!-- Styles Sheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260817_v72_REVIEWS_TO_WHATSAPP" />
+  <link rel="stylesheet" href="css/style.css?v=20260817_v73_ORDER_WHATSAPP_BUTTON" />
 </head>
 <body>
 
@@ -914,9 +914,9 @@
           </div>
         </div>
 
-        <!-- SUBMIT BUTTON -->
-        <button type="submit" class="btn btn-gold" style="width: 100%; font-size: 1.1rem;">
-          <i class="fas fa-check-circle"></i> Valider et Passer la Commande
+        <!-- SUBMIT BUTTON (100% WHATSAPP DIRECT DISPATCH) -->
+        <button type="submit" class="btn btn-whatsapp" style="width: 100%; padding: 16px; font-size: 1.15rem; font-weight: bold;">
+          <i class="fab fa-whatsapp"></i> Valider et Envoyer ma Commande sur WhatsApp
         </button>
       </form>
     </div>
@@ -1346,8 +1346,8 @@
   </svg>
 
   <!-- Scripts -->
-  <script src="js/products.js?v=20260817_v72_REVIEWS_TO_WHATSAPP"></script>
-  <script src="js/supabase.js?v=20260817_v72_REVIEWS_TO_WHATSAPP"></script>
-  <script src="js/app.js?v=20260817_v72_REVIEWS_TO_WHATSAPP"></script>
+  <script src="js/products.js?v=20260817_v73_ORDER_WHATSAPP_BUTTON"></script>
+  <script src="js/supabase.js?v=20260817_v73_ORDER_WHATSAPP_BUTTON"></script>
+  <script src="js/app.js?v=20260817_v73_ORDER_WHATSAPP_BUTTON"></script>
 </body>
 </html>
