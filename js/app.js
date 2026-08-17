@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v73.0_order_submit_button_converted_to_whatsapp';
+  const CURRENT_APP_VERSION = 'v74.0_instant_whatsapp_redirection_location_href';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -225,19 +225,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     closeModal('receipt-confirm-modal');
-    
-    // Reset form
     rcPhotoBase64 = null;
     document.getElementById('rc-photo-preview-box').style.display = 'none';
-
-    const waMsgRc = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${custName} (${custPhone}). Je vous confirme la bonne réception de mon flacon de parfum "${perfumeName}" pour la commande N° ${orderNum}.`);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRc}`, '_blank');
-
-    alert(`✓ Merci ${custName} ! Votre confirmation de réception avec photo pour la commande N° "${orderNum}" a été enregistrée sur la plateforme et transmise sur WhatsApp !`);
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
     }
+
+    const waMsgRc = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${custName} (${custPhone}). Je vous confirme la bonne réception de mon flacon de parfum "${perfumeName}" pour la commande N° ${orderNum}.`);
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRc}`;
   };
 
   window.sendFeedbackSubmit = function(e) {
@@ -265,14 +261,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModal('feedback-modal');
 
-    const waMsgFb = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (Commande N° ${orderNum}). Voici mon avis après réception de mon parfum : "${msg}"`);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgFb}`, '_blank');
-
-    alert(`✓ Merci ${name} ! Votre témoignage pour la commande N° "${orderNum}" a bien été enregistré sur la plateforme et transmis sur WhatsApp !`);
-
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
     }
+
+    const waMsgFb = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (Commande N° ${orderNum}). Voici mon avis après réception de mon parfum : "${msg}"`);
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgFb}`;
   };
 
   // --------------------------------------------------------------------------
@@ -361,9 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const starsStr = "★".repeat(stars);
     const waMsgRev = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${authorName} (${city}). Je viens de laisser un avis ${starsStr} (${stars}/5) sur le parfum "${perfume}" : "${text}"`);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRev}`, '_blank');
-
-    alert(`✓ Merci ${authorName} ! Votre avis sur le parfum "${perfume}" a bien été publié sur Shone Parfumerie et envoyé sur WhatsApp !`);
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRev}`;
   };
 
   // --------------------------------------------------------------------------
@@ -427,14 +419,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModal('availability-modal');
 
-    const waMsgAvail = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}). Je souhaite vérifier la disponibilité du parfum : "${perfumeName}".`);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAvail}`, '_blank');
-
-    alert(`✓ Merci ${name} ! Votre demande de disponibilité pour le parfum "${perfumeName}" a été enregistrée sur la plateforme et transmise sur WhatsApp !`);
-    
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
     }
+
+    const waMsgAvail = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}). Je souhaite vérifier la disponibilité du parfum : "${perfumeName}".`);
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAvail}`;
   };
 
   // --------------------------------------------------------------------------
@@ -464,12 +454,10 @@ document.addEventListener('DOMContentLoaded', () => {
       window.ShoneCloudSync.pushInboxMessage(newMessage);
     }
 
-    const waMsgAdv = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}, Pour : ${gender}). Je souhaite recevoir votre conseil olfactif pour trouver un parfum : "${requestDesc}".`);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAdv}`, '_blank');
-
-    alert(`✓ Merci ${name} ! Votre demande de Conseil Olfactif a été enregistrée sur la plateforme et transmise sur WhatsApp !`);
-    
     document.getElementById('advisor-custom-form').reset();
+
+    const waMsgAdv = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}, Pour : ${gender}). Je souhaite recevoir votre conseil olfactif pour trouver un parfum : "${requestDesc}".`);
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAdv}`;
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -755,16 +743,16 @@ document.addEventListener('DOMContentLoaded', () => {
 💳 Paiement : ${paymentLabel}
 💰 TOTAL À PAYER : ${total.toLocaleString('fr-FR')} FCFA`;
 
-    document.getElementById('success-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`;
-
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`, '_blank');
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`;
+    document.getElementById('success-wa-btn').href = waUrl;
 
     closeModal('direct-order-modal');
-    openModal('success-modal');
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
     }
+
+    window.location.href = waUrl;
   };
 
   // --------------------------------------------------------------------------
