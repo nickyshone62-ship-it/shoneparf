@@ -200,6 +200,17 @@ const PRODUCTS_DATA = [
     size: "100 ml",
     image: "images/yara.png",
     description: "Quand on parle de ce parfum, on en parle avec de la douceur, car c'est un parfum très féminin. Il est sucré, floral, avec des notes d'agrumes, de fruits tropicaux et de poudré. Flacon de 100 ml."
+  },
+  {
+    id: "prod-19",
+    name: "Vanille Bouquet",
+    gender: "femme",
+    genderLabel: "Femme",
+    style: "Frais & Épicé",
+    price: 10000,
+    size: "100 ml",
+    image: "images/vanille-bouquet.png",
+    description: "Un parfum en vrai vanillé, très musqué, épicé et frais. Conçu pour les femmes qui veulent sentir bon toute la journée. Flacon de 100 ml."
   }
 ];
 
