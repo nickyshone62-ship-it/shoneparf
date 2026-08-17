@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v70.0_100percent_platform_information_sync';
+  const CURRENT_APP_VERSION = 'v71.0_all_messages_to_whatsapp_and_cloud_sync';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -230,7 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
     rcPhotoBase64 = null;
     document.getElementById('rc-photo-preview-box').style.display = 'none';
 
-    alert(`✓ Merci ${custName} ! Votre confirmation de réception avec photo pour la commande N° "${orderNum}" a bien été enregistrée sur la plateforme Shone Parfumerie !`);
+    const waMsgRc = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${custName} (${custPhone}). Je vous confirme la bonne réception de mon flacon de parfum "${perfumeName}" pour la commande N° ${orderNum}.`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRc}`, '_blank');
+
+    alert(`✓ Merci ${custName} ! Votre confirmation de réception avec photo pour la commande N° "${orderNum}" a été enregistrée sur la plateforme et transmise sur WhatsApp !`);
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -261,7 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     closeModal('feedback-modal');
-    alert(`✓ Merci ${name} ! Votre témoignage pour la commande N° "${orderNum}" a bien été transmis à l'administrateur sur la plateforme Shone Parfumerie !`);
+
+    const waMsgFb = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (Commande N° ${orderNum}). Voici mon avis après réception de mon parfum : "${msg}"`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgFb}`, '_blank');
+
+    alert(`✓ Merci ${name} ! Votre témoignage pour la commande N° "${orderNum}" a bien été enregistré sur la plateforme et transmis sur WhatsApp !`);
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -352,7 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModal('add-review-modal');
     renderCustomerReviews();
 
-    alert(`✓ Merci ${authorName} ! Votre avis sur le parfum "${perfume}" a bien été publié sur Shone Parfumerie.`);
+    const starsStr = "★".repeat(stars);
+    const waMsgRev = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${authorName} (${city}). Je viens de laisser un avis ${starsStr} (${stars}/5) sur le parfum "${perfume}" : "${text}"`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRev}`, '_blank');
+
+    alert(`✓ Merci ${authorName} ! Votre avis sur le parfum "${perfume}" a bien été publié sur Shone Parfumerie et envoyé sur WhatsApp !`);
   };
 
   // --------------------------------------------------------------------------
@@ -415,7 +426,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     closeModal('availability-modal');
-    alert(`✓ Merci ${name} ! Votre demande de disponibilité pour le parfum "${perfumeName}" a été enregistrée avec succès sur la plateforme Shone Parfumerie ! L'administrateur a bien reçu votre demande.`);
+
+    const waMsgAvail = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}). Je souhaite vérifier la disponibilité du parfum : "${perfumeName}".`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAvail}`, '_blank');
+
+    alert(`✓ Merci ${name} ! Votre demande de disponibilité pour le parfum "${perfumeName}" a été enregistrée sur la plateforme et transmise sur WhatsApp !`);
     
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -449,7 +464,10 @@ document.addEventListener('DOMContentLoaded', () => {
       window.ShoneCloudSync.pushInboxMessage(newMessage);
     }
 
-    alert(`✓ Merci ${name} ! Votre demande de Conseil Olfactif a été enregistrée avec succès sur la plateforme Shone Parfumerie ! L'administrateur a bien reçu vos critères.`);
+    const waMsgAdv = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}, Pour : ${gender}). Je souhaite recevoir votre conseil olfactif pour trouver un parfum : "${requestDesc}".`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAdv}`, '_blank');
+
+    alert(`✓ Merci ${name} ! Votre demande de Conseil Olfactif a été enregistrée sur la plateforme et transmise sur WhatsApp !`);
     
     document.getElementById('advisor-custom-form').reset();
 
@@ -738,6 +756,8 @@ document.addEventListener('DOMContentLoaded', () => {
 💰 TOTAL À PAYER : ${total.toLocaleString('fr-FR')} FCFA`;
 
     document.getElementById('success-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`;
+
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`, '_blank');
 
     closeModal('direct-order-modal');
     openModal('success-modal');
