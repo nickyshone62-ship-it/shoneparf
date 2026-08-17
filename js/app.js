@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // AUTOMATIC CACHE RESET FOR MOBILE BROWSERS & NETLIFY DEPLOYMENT
-  const CURRENT_APP_VERSION = 'v81.0_added_vanille_bouquet';
+  const CURRENT_APP_VERSION = 'v82.0_restored_admin_removed_floating_wa_btn';
   if (localStorage.getItem('shone_app_version') !== CURRENT_APP_VERSION) {
     localStorage.removeItem('shone_products');
     localStorage.removeItem('shone_reviews');
@@ -106,20 +106,20 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: "rev-1",
-      authorName: "Aminata Kaboré",
+      authorName: "Aminata Kabor├®",
       city: "Ouagadougou (Karpala)",
-      perfume: "Éclair",
+      perfume: "├ëclair",
       stars: 5,
-      text: "Le parfum Éclair est une pure merveille gourmande ! La vanille et le caramel sentent divinement bon. Livraison express parfaite chez moi à Karpala !",
+      text: "Le parfum ├ëclair est une pure merveille gourmande ! La vanille et le caramel sentent divinement bon. Livraison express parfaite chez moi ├á Karpala !",
       date: "2026-08-16"
     },
     {
       id: "rev-2",
-      authorName: "Fatoumata Traoré",
+      authorName: "Fatoumata Traor├®",
       city: "Bamako (ACI 2000, Mali)",
       perfume: "Liquid Brun",
       stars: 5,
-      text: "Reçu très rapidement à Bamako. Liquid Brun est une fragrance de luxe rare et envoûtante avec une tenue exceptionnelle de 72h. Merci Shone Parfumerie !",
+      text: "Re├ºu tr├¿s rapidement ├á Bamako. Liquid Brun est une fragrance de luxe rare et envo├╗tante avec une tenue exceptionnelle de 72h. Merci Shone Parfumerie !",
       date: "2026-08-15"
     },
     {
@@ -128,34 +128,34 @@ document.addEventListener('DOMContentLoaded', () => {
       city: "Bobo-Dioulasso",
       perfume: "Intense Wayfarer",
       stars: 5,
-      text: "Intense Wayfarer est d'une puissance et d'une rareté remarquables. Merci à toute l'équipe Shone Parfumerie pour la rapidité du service et le suivi SHN très pratique.",
+      text: "Intense Wayfarer est d'une puissance et d'une raret├® remarquables. Merci ├á toute l'├®quipe Shone Parfumerie pour la rapidit├® du service et le suivi SHN tr├¿s pratique.",
       date: "2026-08-14"
     },
     {
       id: "rev-4",
-      authorName: "Ousmane Koné",
+      authorName: "Ousmane Kon├®",
       city: "Ouagadougou (Patte d'Oie)",
       perfume: "Monark",
       stars: 5,
-      text: "Monark est d'une grande élégance. Le flacon HD et le packaging avec le lion couronné sont magnifiques. Une tenue record garantie !",
+      text: "Monark est d'une grande ├®l├®gance. Le flacon HD et le packaging avec le lion couronn├® sont magnifiques. Une tenue record garantie !",
       date: "2026-08-13"
     },
     {
       id: "rev-5",
-      authorName: "Aïcha Diallo",
+      authorName: "A├»cha Diallo",
       city: "Bamako (Badalabougou, Mali)",
       perfume: "Asad Bourbon",
       stars: 5,
-      text: "Le conseiller olfactif m'a très bien orientée sur WhatsApp. Asad Bourbon (Vanille Bourbon) est extrêmement puissant, gourmand et envoûtant.",
+      text: "Le conseiller olfactif m'a tr├¿s bien orient├®e sur WhatsApp. Asad Bourbon (Vanille Bourbon) est extr├¬mement puissant, gourmand et envo├╗tant.",
       date: "2026-08-12"
     },
     {
       id: "rev-6",
       authorName: "Brahima Sanou",
       city: "Koudougou",
-      perfume: "Réserve",
+      perfume: "R├®serve",
       stars: 5,
-      text: "Le best-seller Réserve est au rendez-vous. La fragrance est riche, boisée et raffinée. Service impeccable !",
+      text: "Le best-seller R├®serve est au rendez-vous. La fragrance est riche, bois├®e et raffin├®e. Service impeccable !",
       date: "2026-08-11"
     }
   ];
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.submitReceiptPhotoConfirmation = function(e) {
     e.preventDefault();
     if (!rcPhotoBase64) {
-      alert("⚠️ La photo de votre flacon de parfum reçu est OBLIGATOIRE ! Veuillez sélectionner votre fichier photo.");
+      alert("ÔÜá´©Å La photo de votre flacon de parfum re├ºu est OBLIGATOIRE ! Veuillez s├®lectionner votre fichier photo.");
       return;
     }
 
@@ -216,13 +216,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newReceiptMessage = {
       id: `msg-${Date.now()}`,
-      type: 'CONFIRMATION RÉCEPTION',
+      type: 'CONFIRMATION R├ëCEPTION',
       orderNumber: orderNum,
       customerName: custName,
       customerPhone: custPhone,
       perfumeName: perfumeName,
       photoImage: rcPhotoBase64,
-      details: `Colis N° ${orderNum} bien reçu pour le parfum "${perfumeName}". Photo de confirmation transmise.`,
+      details: `Colis N┬░ ${orderNum} bien re├ºu pour le parfum "${perfumeName}". Photo de confirmation transmise.`,
       createdAt: new Date().toISOString()
     };
 
@@ -237,7 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
     rcPhotoBase64 = null;
     document.getElementById('rc-photo-preview-box').style.display = 'none';
 
-    const waMsgRc = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${custName} (${custPhone}). Je vous confirme la bonne réception de mon flacon de parfum "${perfumeName}" pour la commande N° ${orderNum}.`);
+    if (document.getElementById('admin-view').style.display !== 'none') {
+      loadAdminData();
+    }
+
+    const waMsgRc = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${custName} (${custPhone}). Je vous confirme la bonne r├®ception de mon flacon de parfum "${perfumeName}" pour la commande N┬░ ${orderNum}.`);
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRc}`;
   };
 
@@ -249,11 +253,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newMessage = {
       id: `msg-${Date.now()}`,
-      type: 'TÉMOIGNAGE APRÈS RÉCEPTION',
+      type: 'T├ëMOIGNAGE APR├êS R├ëCEPTION',
       orderNumber: orderNum,
       customerName: name,
       customerPhone: '',
-      details: `Témoignage pour la commande ${orderNum} : "${msg}"`,
+      details: `T├®moignage pour la commande ${orderNum} : "${msg}"`,
       createdAt: new Date().toISOString()
     };
 
@@ -266,7 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModal('feedback-modal');
 
-    const waMsgFb = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (Commande N° ${orderNum}). Voici mon avis après réception de mon parfum : "${msg}"`);
+    if (document.getElementById('admin-view').style.display !== 'none') {
+      loadAdminData();
+    }
+
+    const waMsgFb = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (Commande N┬░ ${orderNum}). Voici mon avis apr├¿s r├®ception de mon parfum : "${msg}"`);
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgFb}`;
   };
 
@@ -284,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
           <i class="fas fa-star" style="font-size: 2rem; color: var(--gold-primary); margin-bottom: 10px;"></i>
-          <p>Soyez le premier à donner votre avis sur nos parfums disponibles !</p>
+          <p>Soyez le premier ├á donner votre avis sur nos parfums disponibles !</p>
         </div>
       `;
       return;
@@ -292,12 +300,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = validReviews.map(rev => {
       const initial = rev.authorName ? rev.authorName.charAt(0).toUpperCase() : 'S';
-      const starsHtml = '★'.repeat(rev.stars || 5) + '☆'.repeat(5 - (rev.stars || 5));
+      const starsHtml = 'Ôÿà'.repeat(rev.stars || 5) + 'Ôÿå'.repeat(5 - (rev.stars || 5));
 
       const adminReplyHtml = rev.replyText ? `
         <div class="review-admin-reply" style="margin-top: 14px; background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold-primary); padding: 10px 12px; border-radius: 8px; font-size: 0.85rem;">
           <div style="font-weight: 700; color: var(--gold-light); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-            <i class="fas fa-reply text-gold-gradient"></i> Réponse de Shone Parfumerie :
+            <i class="fas fa-reply text-gold-gradient"></i> R├®ponse de Shone Parfumerie :
           </div>
           <div style="color: var(--text-main); font-style: normal;">"${rev.replyText}"</div>
         </div>
@@ -354,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModal('add-review-modal');
     renderCustomerReviews();
 
-    const starsStr = "★".repeat(stars);
+    const starsStr = "Ôÿà".repeat(stars);
     const waMsgRev = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${authorName} (${city}). Je viens de laisser un avis ${starsStr} (${stars}/5) sur le parfum "${perfume}" : "${text}"`);
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgRev}`;
   };
@@ -364,8 +372,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   window.switchView = function(viewName) {
     const storeView = document.getElementById('store-view');
-    if (storeView) storeView.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const adminView = document.getElementById('admin-view');
+
+    if (viewName === 'admin') {
+      storeView.style.display = 'none';
+      adminView.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (sessionStorage.getItem('shone_admin_logged') === 'true') {
+        document.getElementById('admin-login-screen').style.display = 'none';
+        document.getElementById('admin-main-screen').style.display = 'block';
+        loadAdminData();
+      } else {
+        document.getElementById('admin-login-screen').style.display = 'block';
+        document.getElementById('admin-main-screen').style.display = 'none';
+      }
+    } else {
+      adminView.style.display = 'none';
+      storeView.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   // --------------------------------------------------------------------------
@@ -385,11 +411,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newMessage = {
       id: `msg-${Date.now()}`,
-      type: 'DISPONIBILITÉ',
+      type: 'DISPONIBILIT├ë',
       perfumeName,
       customerName: name,
       customerPhone: phone,
-      details: `Demande de disponibilité pour le parfum "${perfumeName}"`,
+      details: `Demande de disponibilit├® pour le parfum "${perfumeName}"`,
       createdAt: new Date().toISOString()
     };
 
@@ -402,12 +428,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeModal('availability-modal');
 
-    const waMsgAvail = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}). Je souhaite vérifier la disponibilité du parfum : "${perfumeName}".`);
+    if (document.getElementById('admin-view').style.display !== 'none') {
+      loadAdminData();
+    }
+
+    const waMsgAvail = encodeURIComponent(`Bonjour Shone Parfumerie ! Je suis ${name} (${phone}). Je souhaite v├®rifier la disponibilit├® du parfum : "${perfumeName}".`);
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsgAvail}`;
   };
 
   // --------------------------------------------------------------------------
-  // CONSEILLER OLFACTIF — FORMULAIRE SUR-MESURE (PLATFORM INBOX REGISTRATION)
+  // CONSEILLER OLFACTIF ÔÇö FORMULAIRE SUR-MESURE (PLATFORM INBOX REGISTRATION)
   // --------------------------------------------------------------------------
   window.submitAdvisorCustomForm = function(e) {
     e.preventDefault();
@@ -422,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gender,
       customerName: name,
       customerPhone: phone,
-      details: `Parfum recherché (${gender}) : "${requestDesc}"`,
+      details: `Parfum recherch├® (${gender}) : "${requestDesc}"`,
       createdAt: new Date().toISOString()
     };
 
@@ -495,10 +525,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fas fa-flask"></i> ${currentOrderProduct.size || '100 ml'}</span>
           </div>
           <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--gold-light); margin-bottom: 4px;">${currentOrderProduct.name}</h3>
-          <div style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">${currentOrderProduct.price.toLocaleString('fr-FR')} FCFA / unité</div>
+          <div style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">${currentOrderProduct.price.toLocaleString('fr-FR')} FCFA / unit├®</div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="font-size: 0.85rem; font-weight: 600;">Quantité :</span>
+          <span style="font-size: 0.85rem; font-weight: 600;">Quantit├® :</span>
           <div class="qty-input-group">
             <button type="button" onclick="changeDirectQty(-1)">-</button>
             <span id="direct-qty-val" style="font-weight: 800; padding: 0 6px;">${currentOrderQty}</span>
@@ -574,9 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="display: flex; flex-direction: column; gap: 10px; word-break: break-all; overflow-wrap: anywhere;">
           <div><i class="fas fa-mobile-screen-button" style="color: #FF7900;"></i> <strong>Paiement Orange Money :</strong></div>
           <div style="background: var(--bg-dark); padding: 12px; border-radius: var(--radius-sm); border: 1px solid #FF7900; word-break: break-all;">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Numéro Orange Money Shone : <strong>+226 ${ORANGE_NUMBER}</strong></div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Num├®ro Orange Money Shone : <strong>+226 ${ORANGE_NUMBER}</strong></div>
             <div style="font-size: clamp(0.85rem, 3.8vw, 1.15rem); font-weight: 800; color: #FF7900; margin-top: 6px; word-break: break-all; overflow-wrap: anywhere;">
-              Code USSD à composer : <code style="background: rgba(255, 121, 0, 0.15); padding: 4px 8px; border-radius: 4px; font-family: monospace; word-break: break-all !important; display: inline-block;">${ussdCode}</code>
+              Code USSD ├á composer : <code style="background: rgba(255, 121, 0, 0.15); padding: 4px 8px; border-radius: 4px; font-family: monospace; word-break: break-all !important; display: inline-block;">${ussdCode}</code>
             </div>
           </div>
           <a href="tel:${encodeURIComponent(ussdCode)}" class="btn btn-gold" style="padding: 10px 14px; font-size: 0.85rem; width: 100%; white-space: normal; text-align: center;">
@@ -591,9 +621,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="display: flex; flex-direction: column; gap: 10px; word-break: break-all; overflow-wrap: anywhere;">
           <div><i class="fas fa-mobile-retro" style="color: #005CA9;"></i> <strong>Paiement Moov Money :</strong></div>
           <div style="background: var(--bg-dark); padding: 12px; border-radius: var(--radius-sm); border: 1px solid #005CA9; word-break: break-all;">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Numéro Moov Money Shone : <strong>+226 ${MOOV_NUMBER}</strong></div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Num├®ro Moov Money Shone : <strong>+226 ${MOOV_NUMBER}</strong></div>
             <div style="font-size: clamp(0.85rem, 3.8vw, 1.15rem); font-weight: 800; color: #60A5FA; margin-top: 6px; word-break: break-all; overflow-wrap: anywhere;">
-              Code USSD à composer : <code style="background: rgba(0, 92, 169, 0.2); padding: 4px 8px; border-radius: 4px; font-family: monospace; word-break: break-all !important; display: inline-block;">${ussdCode}</code>
+              Code USSD ├á composer : <code style="background: rgba(0, 92, 169, 0.2); padding: 4px 8px; border-radius: 4px; font-family: monospace; word-break: break-all !important; display: inline-block;">${ussdCode}</code>
             </div>
           </div>
           <a href="tel:${encodeURIComponent(ussdCode)}" class="btn btn-gold" style="padding: 10px 14px; font-size: 0.85rem; width: 100%; background: #005CA9; color: #FFF; white-space: normal; text-align: center;">
@@ -608,7 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div><i class="fas fa-water" style="color: #1DC3F2;"></i> <strong>Paiement Wave Mobile Money :</strong></div>
           <div style="background: var(--bg-dark); padding: 14px; border-radius: var(--radius-sm); border: 1px solid #1DC3F2;">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Numéro de compte Wave Shone :</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Num├®ro de compte Wave Shone :</div>
             <div style="font-size: 1.4rem; font-weight: 900; color: #1DC3F2; margin-top: 2px;">${wavePhone}</div>
           </div>
           <a href="https://wave.com" target="_blank" class="btn btn-gold" style="padding: 10px 16px; font-size: 0.9rem; width: 100%; background: linear-gradient(135deg, #1DC3F2, #0D2C54); color: #FFF;">
@@ -618,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       uploadBox.style.display = 'block';
     } else if (currentPaymentMethod === 'cash') {
-      instrText.innerHTML = `<i class="fas fa-money-bill-wave" style="color: #10B981;"></i> <strong>Paiement en Espèces :</strong> Règlement à la livraison après contrôle de votre parfum ou lors du retrait en boutique.`;
+      instrText.innerHTML = `<i class="fas fa-money-bill-wave" style="color: #10B981;"></i> <strong>Paiement en Esp├¿ces :</strong> R├¿glement ├á la livraison apr├¿s contr├┤le de votre parfum ou lors du retrait en boutique.`;
       uploadBox.style.display = 'none';
     }
   }
@@ -629,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const reader = new FileReader();
       reader.onload = function(evt) {
         uploadedReceiptBase64 = evt.target.result;
-        document.getElementById('receipt-file-name').textContent = `✓ Capture enregistrée : ${file.name}`;
+        document.getElementById('receipt-file-name').textContent = `Ô£ô Capture enregistr├®e : ${file.name}`;
       };
       reader.readAsDataURL(file);
     } else {
@@ -651,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.submitDirectOrder = function(e) {
     e.preventDefault();
     if (!currentOrderProduct) {
-      alert("⚠️ Aucun parfum sélectionné.");
+      alert("ÔÜá´©Å Aucun parfum s├®lectionn├®.");
       return;
     }
 
@@ -661,14 +691,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const phone = document.getElementById('direct-cust-phone').value.trim();
 
     if (!name) {
-      alert("⚠️ Veuillez saisir votre Nom & Prénom.");
+      alert("ÔÜá´©Å Veuillez saisir votre Nom & Pr├®nom.");
       const elem = document.getElementById('direct-cust-name');
       if (elem) elem.focus();
       return;
     }
 
     if (!phone) {
-      alert("⚠️ Veuillez saisir votre Numéro WhatsApp.");
+      alert("ÔÜá´©Å Veuillez saisir votre Num├®ro WhatsApp.");
       const elem = document.getElementById('direct-cust-phone');
       if (elem) elem.focus();
       return;
@@ -697,13 +727,13 @@ document.addEventListener('DOMContentLoaded', () => {
         quantity: currentOrderQty
       }],
       subtotal,
-      deliveryFee: "À convenir selon la ville / quartier",
+      deliveryFee: "├Ç convenir selon la ville / quartier",
       total,
       deliveryRequested: isDeliveryRequested,
       trackingRequested: isTrackingRequested,
       paymentMethod: currentPaymentMethod.toUpperCase(),
       receiptImage: uploadedReceiptBase64,
-      status: 'Commande reçue',
+      status: 'Commande re├ºue',
       createdAt: now.toISOString()
     };
 
@@ -716,22 +746,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('success-order-num').textContent = orderNumber;
 
-    const paymentLabel = currentPaymentMethod === 'orange' ? 'Orange Money' : currentPaymentMethod === 'moov' ? 'Moov Money' : currentPaymentMethod === 'wave' ? 'Wave' : 'Espèces à la livraison';
-    const deliveryText = isDeliveryRequested ? `Livraison souhaitée à ${neighborhood}, ${city} (${country})` : 'Retrait en boutique (Sans livraison)';
+    const paymentLabel = currentPaymentMethod === 'orange' ? 'Orange Money' : currentPaymentMethod === 'moov' ? 'Moov Money' : currentPaymentMethod === 'wave' ? 'Wave' : 'Esp├¿ces ├á la livraison';
+    const deliveryText = isDeliveryRequested ? `Livraison souhait├®e ├á ${neighborhood}, ${city} (${country})` : 'Retrait en boutique (Sans livraison)';
 
-    const waMsgText = `Bonjour Shone Parfumerie ! Je viens de valider ma commande avec reçu transmis :
-📌 N° Commande : ${orderNumber}
-💎 Parfum : ${currentOrderProduct.name} (Qté: ${currentOrderQty})
-🌍 Pays : ${country}
-👤 Client : ${name} (${phone})
-🚚 Zone / Quartier : ${deliveryText}
-💳 Paiement : ${paymentLabel}
-💰 TOTAL À PAYER : ${total.toLocaleString('fr-FR')} FCFA`;
+    const waMsgText = `Bonjour Shone Parfumerie ! Je viens de valider ma commande avec re├ºu transmis :
+­ƒôî N┬░ Commande : ${orderNumber}
+­ƒÆÄ Parfum : ${currentOrderProduct.name} (Qt├®: ${currentOrderQty})
+­ƒîì Pays : ${country}
+­ƒæñ Client : ${name} (${phone})
+­ƒÜÜ Zone / Quartier : ${deliveryText}
+­ƒÆ│ Paiement : ${paymentLabel}
+­ƒÆ░ TOTAL ├Ç PAYER : ${total.toLocaleString('fr-FR')} FCFA`;
 
     const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsgText)}`;
     document.getElementById('success-wa-btn').href = waUrl;
 
     closeModal('direct-order-modal');
+
+    if (document.getElementById('admin-view').style.display !== 'none') {
+      loadAdminData();
+    }
 
     window.location.href = waUrl;
   };
@@ -825,11 +859,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCustomerReviews();
     loadAdminData();
 
-    alert("✓ Parfum enregistré avec succès !");
+    alert("Ô£ô Parfum enregistr├® avec succ├¿s !");
   };
 
   window.deleteProduct = function(productId) {
-    if (confirm("Voulez-vous vraiment supprimer définitivement ce parfum du catalogue ?")) {
+    if (confirm("Voulez-vous vraiment supprimer d├®finitivement ce parfum du catalogue ?")) {
       allProducts = allProducts.filter(p => p.id !== productId);
       localStorage.setItem('shone_products', JSON.stringify(allProducts));
       applyFiltersAndSort();
@@ -842,8 +876,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // PROCEDURE & AVAILABILITY HELPERS
   // --------------------------------------------------------------------------
   window.askAvailability = function() {
-    document.getElementById('avail-modal-perfume-name').textContent = "Sélection Parfumerie";
-    document.getElementById('avail-perfume-hidden-name').value = "Consultation Générale";
+    document.getElementById('avail-modal-perfume-name').textContent = "S├®lection Parfumerie";
+    document.getElementById('avail-perfume-hidden-name').value = "Consultation G├®n├®rale";
     openModal('availability-modal');
   };
 
@@ -859,11 +893,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newMessage = {
       id: `msg-${Date.now()}`,
-      type: 'TÉMOIGNAGE APRÈS RÉCEPTION',
+      type: 'T├ëMOIGNAGE APR├êS R├ëCEPTION',
       orderNumber: orderNum,
       customerName: name,
       customerPhone: '',
-      details: `Témoignage pour la commande ${orderNum} : "${msg}"`,
+      details: `T├®moignage pour la commande ${orderNum} : "${msg}"`,
       createdAt: new Date().toISOString()
     };
 
@@ -875,7 +909,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     closeModal('feedback-modal');
-    alert(`✓ Merci ${name} ! Votre témoignage pour la commande N° "${orderNum}" a bien été transmis à l'administrateur sur la plateforme Shone Parfumerie !`);
+    alert(`Ô£ô Merci ${name} ! Votre t├®moignage pour la commande N┬░ "${orderNum}" a bien ├®t├® transmis ├á l'administrateur sur la plateforme Shone Parfumerie !`);
 
     if (document.getElementById('admin-view').style.display !== 'none') {
       loadAdminData();
@@ -909,7 +943,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (catalogElem) catalogElem.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // --------------------------------------------------------------------------
+  // AUTHENTICATION ADMIN
+  // --------------------------------------------------------------------------
+  window.handleAdminLogin = function(e) {
+    e.preventDefault();
+    const pwd = document.getElementById('admin-password-input').value;
+    if (pwd === 'shone2026' || pwd === 'admin') {
+      sessionStorage.setItem('shone_admin_logged', 'true');
+      document.getElementById('admin-login-screen').style.display = 'none';
+      document.getElementById('admin-main-screen').style.display = 'block';
+      loadAdminData();
+    } else {
+      alert("Code d'acc├¿s incorrect ! Acc├¿s refus├®.");
+    }
+  };
 
+  window.adminLogout = function() {
+    sessionStorage.removeItem('shone_admin_logged');
+    switchView('store');
+  };
 
   // --------------------------------------------------------------------------
   // STOREFRONT CATALOGUE
@@ -950,7 +1003,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <i class="fas fa-bottle-droplet text-gold-gradient"></i>
           </div>
           <h3 style="font-family: var(--font-heading); color: var(--gold-light); font-size: 1.4rem; margin-bottom: 8px;">Catalogue Shone Parfumerie</h3>
-          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 20px auto; font-size: 0.95rem;">Retrouvez l'ensemble de nos fragrances d'exception ci-dessous.</p>
+          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 20px auto; font-size: 0.95rem;">Le catalogue est pr├¬t. Vous pouvez ajouter vos propres parfums directement depuis l'Espace Admin !</p>
+          <button class="btn btn-gold" onclick="switchView('admin')">
+            <i class="fas fa-plus-circle"></i> Acc├®der ├á l'Espace Admin pour Ajouter un Parfum
+          </button>
         </div>
       `;
       return;
@@ -971,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const escapedName = product.name.replace(/'/g, "\\'");
 
       card.innerHTML = `
-        <div class="product-image-box" onclick="window.openImageZoomModal('${product.image}', '${escapedName}')" title="Cliquez pour agrandir en Haute Définition">
+        <div class="product-image-box" onclick="window.openImageZoomModal('${product.image}', '${escapedName}')" title="Cliquez pour agrandir en Haute D├®finition">
           <img src="${product.image}" alt="${product.name}" loading="lazy" />
           <div style="position: absolute; top: 10px; right: 10px; background: rgba(10, 10, 15, 0.85); color: var(--gold-light); border: 1px solid var(--border-gold); padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.75rem; display: flex; align-items: center; gap: 5px; backdrop-filter: blur(4px); pointer-events: none; z-index: 2;">
             <i class="fas fa-search-plus"></i> Zoom HD
@@ -991,7 +1047,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
             <button class="btn btn-outline" style="padding: 8px 10px; font-size: 0.78rem;" onclick="window.checkSpecificAvailability('${escapedName}')">
-              <i class="fas fa-boxes-packing"></i> Disponibilité
+              <i class="fas fa-boxes-packing"></i> Disponibilit├®
             </button>
             <button class="btn btn-gold" style="padding: 8px 10px; font-size: 0.78rem;" onclick="window.openDirectOrderModal('${product.id}')">
               <i class="fas fa-shopping-bag"></i> Commander
@@ -1044,7 +1100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
               <button class="btn btn-outline" style="padding: 10px 14px; font-size: 0.88rem;" onclick="window.checkSpecificAvailability('${escapedName}')">
-                <i class="fas fa-boxes-packing"></i> Demander Disponibilité
+                <i class="fas fa-boxes-packing"></i> Demander Disponibilit├®
               </button>
               <button class="btn btn-gold" style="padding: 10px 14px; font-size: 0.88rem;" onclick="window.closeModal('product-modal'); window.openDirectOrderModal('${product.id}');">
                 <i class="fas fa-shopping-bag"></i> Commander
@@ -1068,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <i class="fas fa-location-dot" style="font-size: 2rem; color: var(--gold-primary);"></i>
           <h3 style="margin-top: 10px;">${z.name}</h3>
           <div class="zone-price" style="font-size: 1rem; color: var(--gold-light);">Tarif convenu selon quartier</div>
-          <p style="color: var(--text-muted); font-size: 0.85rem;">Livraison rapide à domicile</p>
+          <p style="color: var(--text-muted); font-size: 0.85rem;">Livraison rapide ├á domicile</p>
         </div>
       `).join('');
     }
@@ -1083,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultBox = document.getElementById('tracking-result');
 
     if (!inputNum) {
-      alert("Veuillez saisir votre numéro de commande.");
+      alert("Veuillez saisir votre num├®ro de commande.");
       return;
     }
 
@@ -1093,13 +1149,13 @@ document.addEventListener('DOMContentLoaded', () => {
       resultBox.innerHTML = `
         <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-danger); padding: 20px; border-radius: var(--radius-md); color: var(--text-main); text-align: center;">
           <i class="fas fa-exclamation-circle" style="color: var(--accent-danger); font-size: 2rem; margin-bottom: 10px;"></i>
-          <p>Aucune commande trouvée sous le numéro <strong>${inputNum}</strong>.</p>
+          <p>Aucune commande trouv├®e sous le num├®ro <strong>${inputNum}</strong>.</p>
         </div>
       `;
       return;
     }
 
-    const statuses = ['Commande reçue', 'Commande confirmée', 'En préparation', 'En livraison', 'Livrée'];
+    const statuses = ['Commande re├ºue', 'Commande confirm├®e', 'En pr├®paration', 'En livraison', 'Livr├®e'];
     const currentStepIndex = statuses.indexOf(order.status);
 
     resultBox.innerHTML = `
@@ -1125,7 +1181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
           <p><strong>Client :</strong> ${order.customer ? order.customer.name : 'Client'} (${order.customer ? order.customer.phone : '-'})</p>
           <p><strong>Adresse :</strong> ${order.customer ? order.customer.neighborhood : ''}, ${order.customer ? order.customer.city : ''}</p>
-          <p><strong>Paiement :</strong> <span style="color: var(--gold-primary); font-weight: 700;">${order.paymentMethod || 'Espèces'}</span></p>
+          <p><strong>Paiement :</strong> <span style="color: var(--gold-primary); font-weight: 700;">${order.paymentMethod || 'Esp├¿ces'}</span></p>
           <p><strong>Total Parfum :</strong> <span style="color: var(--gold-light); font-weight: 700;">${order.total.toLocaleString('fr-FR')} FCFA</span></p>
         </div>
       </div>
@@ -1145,8 +1201,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderAdminStats() {
     const revenue = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
-    const pending = allOrders.filter(o => o.status === 'En préparation' || o.status === 'Commande reçue').length;
-    const delivered = allOrders.filter(o => o.status === 'Livrée').length;
+    const pending = allOrders.filter(o => o.status === 'En pr├®paration' || o.status === 'Commande re├ºue').length;
+    const delivered = allOrders.filter(o => o.status === 'Livr├®e').length;
 
     document.getElementById('stat-revenue').textContent = `${revenue.toLocaleString('fr-FR')} FCFA`;
     document.getElementById('stat-total-orders').textContent = allOrders.length;
@@ -1168,16 +1224,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tbody) return;
 
     if (messages.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucun message ou demande enregistré sur la plateforme.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucun message ou demande enregistr├® sur la plateforme.</td></tr>`;
       return;
     }
 
     tbody.innerHTML = messages.map(msg => {
       let typeBadge = '';
-      if (msg.type === 'DISPONIBILITÉ') {
-        typeBadge = `<span style="background: rgba(96, 165, 250, 0.15); color: #60A5FA; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;"><i class="fas fa-boxes-packing"></i> Disponibilité</span>`;
-      } else if (msg.type === 'CONFIRMATION RÉCEPTION') {
-        typeBadge = `<span style="background: rgba(16, 185, 129, 0.15); color: #10B981; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;"><i class="fas fa-camera"></i> Réception + Photo</span>`;
+      if (msg.type === 'DISPONIBILIT├ë') {
+        typeBadge = `<span style="background: rgba(96, 165, 250, 0.15); color: #60A5FA; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;"><i class="fas fa-boxes-packing"></i> Disponibilit├®</span>`;
+      } else if (msg.type === 'CONFIRMATION R├ëCEPTION') {
+        typeBadge = `<span style="background: rgba(16, 185, 129, 0.15); color: #10B981; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;"><i class="fas fa-camera"></i> R├®ception + Photo</span>`;
       } else {
         typeBadge = `<span style="background: rgba(212, 175, 55, 0.15); color: var(--gold-light); padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;"><i class="fas fa-wand-magic-sparkles"></i> Conseil Olfactif</span>`;
       }
@@ -1186,7 +1242,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const fullPhone = cleanPhone.startsWith('226') ? cleanPhone : `226${cleanPhone}`;
 
       // EXACT MESSAGE REQUESTED BY USER
-      const waReplyText = `Bonjour ${msg.customerName}, nous avons bien reçu votre message nous nous apprêtons à vous répondre.`;
+      const waReplyText = `Bonjour ${msg.customerName}, nous avons bien re├ºu votre message nous nous appr├¬tons ├á vous r├®pondre.`;
       const waReplyUrl = `https://wa.me/${fullPhone}?text=${encodeURIComponent(waReplyText)}`;
 
       const escapedName = (msg.customerName || 'Client').replace(/'/g, "\\'");
@@ -1195,7 +1251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // PHOTO THUMBNAIL IF PRESENT
       const photoHtml = msg.photoImage 
-        ? `<div style="margin-top: 8px;"><a href="${msg.photoImage}" target="_blank"><img src="${msg.photoImage}" style="max-height: 70px; border-radius: 6px; border: 1px solid var(--border-gold);" title="Cliquez pour agrandir la photo de preuve" /></a><div style="font-size: 0.7rem; color: var(--gold-primary);">📸 Photo transmise</div></div>`
+        ? `<div style="margin-top: 8px;"><a href="${msg.photoImage}" target="_blank"><img src="${msg.photoImage}" style="max-height: 70px; border-radius: 6px; border: 1px solid var(--border-gold);" title="Cliquez pour agrandir la photo de preuve" /></a><div style="font-size: 0.7rem; color: var(--gold-primary);">­ƒô© Photo transmise</div></div>`
         : '';
 
       return `
@@ -1211,7 +1267,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td style="padding: 14px;">
             <div style="display: flex; gap: 8px; align-items: center;">
               <button class="btn btn-whatsapp" style="padding: 6px 12px; font-size: 0.8rem;" onclick="window.openWaReplyModal('${escapedName}', '${escapedPhone}', '', '${escapedDetails}')">
-                <i class="fab fa-whatsapp"></i> Répondre WhatsApp (Message Prédéfini)
+                <i class="fab fa-whatsapp"></i> R├®pondre WhatsApp (Message Pr├®d├®fini)
               </button>
               <button class="btn btn-outline" style="padding: 6px 10px; font-size: 0.8rem; border-color: var(--accent-danger); color: var(--accent-danger);" onclick="deleteInboxMessage('${msg.id}')">
                 <i class="fas fa-trash"></i>
@@ -1250,20 +1306,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const { name, orderNum, perfumeName, neighborhood } = currentWaTarget;
 
     if (templateId === "1") {
-      txtArea.value = `Bonjour ${name}, nous avons bien reçu votre message chez Shone Parfumerie. Nous nous apprêtons à vous répondre ! Merci de votre confiance.`;
+      txtArea.value = `Bonjour ${name}, nous avons bien re├ºu votre message chez Shone Parfumerie. Nous nous appr├¬tons ├á vous r├®pondre ! Merci de votre confiance.`;
     } else if (templateId === "2") {
-      txtArea.value = `Bonjour ${name}, votre commande ${orderNum ? 'N° ' + orderNum : ''} ${perfumeName ? '(' + perfumeName + ')' : ''} est bien confirmée et en cours de préparation chez Shone Parfumerie !`;
+      txtArea.value = `Bonjour ${name}, votre commande ${orderNum ? 'N┬░ ' + orderNum : ''} ${perfumeName ? '(' + perfumeName + ')' : ''} est bien confirm├®e et en cours de pr├®paration chez Shone Parfumerie !`;
     } else if (templateId === "3") {
-      txtArea.value = `Bonjour ${name}, le parfum ${perfumeName || 'que vous avez demandé'} est actuellement disponible dans notre boutique ! Souhaitez-vous valider votre livraison ?`;
+      txtArea.value = `Bonjour ${name}, le parfum ${perfumeName || 'que vous avez demand├®'} est actuellement disponible dans notre boutique ! Souhaitez-vous valider votre livraison ?`;
     } else if (templateId === "4") {
-      txtArea.value = `Bonjour ${name}, votre commande est prête ! Notre livreur s'apprête à vous contacter pour la livraison à ${neighborhood || 'votre adresse'}. Merci de votre confiance !`;
+      txtArea.value = `Bonjour ${name}, votre commande est pr├¬te ! Notre livreur s'appr├¬te ├á vous contacter pour la livraison ├á ${neighborhood || 'votre adresse'}. Merci de votre confiance !`;
     }
   };
 
   window.launchWaReplySubmit = function() {
     const text = document.getElementById('wa-reply-text-area').value.trim();
     if (!text) {
-      alert("Veuillez rédiger ou choisir un message.");
+      alert("Veuillez r├®diger ou choisir un message.");
       return;
     }
 
@@ -1280,11 +1336,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tbody) return;
 
     if (orders.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucune commande enregistrée.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucune commande enregistr├®e.</td></tr>`;
       return;
     }
 
-    const statuses = ['Commande reçue', 'Commande confirmée', 'En préparation', 'En livraison', 'Livrée'];
+    const statuses = ['Commande re├ºue', 'Commande confirm├®e', 'En pr├®paration', 'En livraison', 'Livr├®e'];
 
     tbody.innerHTML = orders.map(o => {
       const custName = (o.customer ? o.customer.name : 'Client').replace(/'/g, "\\'");
@@ -1299,7 +1355,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td style="padding: 14px;">${o.customer ? o.customer.name : 'Client'}</td>
           <td style="padding: 14px;">${o.customer ? o.customer.phone : '-'}</td>
           <td style="padding: 14px;">${o.customer ? o.customer.neighborhood : '-'} (${o.customer ? o.customer.city : ''})</td>
-          <td style="padding: 14px;"><span style="background: rgba(212,175,55,0.15); color: var(--gold-primary); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">${o.paymentMethod || 'ESPÈCES'}</span></td>
+          <td style="padding: 14px;"><span style="background: rgba(212,175,55,0.15); color: var(--gold-primary); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">${o.paymentMethod || 'ESP├êCES'}</span></td>
           <td style="padding: 14px;"><strong>${(o.total || 0).toLocaleString('fr-FR')} FCFA</strong></td>
           <td style="padding: 14px;">
             <select class="status-select" onchange="changeOrderStatus('${o.orderNumber}', this.value)">
@@ -1308,7 +1364,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
           <td style="padding: 14px;">
             <button class="btn btn-whatsapp" style="padding: 6px 12px; font-size: 0.8rem;" onclick="window.openWaReplyModal('${custName}', '${custPhone}', '${o.orderNumber}', '${firstItemName}', '${neighborhood}')">
-              <i class="fab fa-whatsapp"></i> Répondre WhatsApp
+              <i class="fab fa-whatsapp"></i> R├®pondre WhatsApp
             </button>
           </td>
         </tr>
@@ -1342,8 +1398,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr style="border-bottom: 1px solid var(--border-dark);">
         <td style="padding: 14px;"><img src="${p.image}" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border-gold);" /></td>
         <td style="padding: 14px;"><strong style="color: var(--gold-light);">${p.name}</strong></td>
-        <td style="padding: 14px;"><span style="color: ${p.gender==='homme'?'#60A5FA':'#F472B6'}; font-weight: 700; font-size: 0.8rem;">${p.gender==='homme'?'♂ Homme':'♀ Femme'}</span></td>
-        <td style="padding: 14px;"><span style="color: var(--gold-light); font-weight: 600; font-size: 0.85rem;">✨ ${p.style || 'Doux'}</span></td>
+        <td style="padding: 14px;"><span style="color: ${p.gender==='homme'?'#60A5FA':'#F472B6'}; font-weight: 700; font-size: 0.8rem;">${p.gender==='homme'?'ÔÖé Homme':'ÔÖÇ Femme'}</span></td>
+        <td style="padding: 14px;"><span style="color: var(--gold-light); font-weight: 600; font-size: 0.85rem;">Ô£¿ ${p.style || 'Doux'}</span></td>
         <td style="padding: 14px;"><strong style="color: var(--gold-light);">${p.price.toLocaleString('fr-FR')} FCFA</strong></td>
         <td style="padding: 14px;">
           <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; border-color: var(--border-gold);" onclick="openEditProductModal('${p.id}')">
@@ -1374,16 +1430,223 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tabId === 'reviews-tab' && revTabBtn) revTabBtn.classList.add('active');
   };
 
+  // --------------------------------------------------------------------------
+  // ADMIN REVIEWS MANAGEMENT & OFFICIAL REPLIES ENGINE
+  // --------------------------------------------------------------------------
+  function renderAdminReviewsTable(reviews) {
+    const tbody = document.getElementById('admin-reviews-tbody');
+    if (!tbody) return;
+
+    if (!reviews || reviews.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">Aucun avis enregistr├®.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = reviews.map(rev => {
+      const starsHtml = 'Ôÿà'.repeat(rev.stars || 5) + 'Ôÿå'.repeat(5 - (rev.stars || 5));
+      const escapedAuthor = (rev.authorName || 'Client').replace(/'/g, "\\'");
+      const escapedPerfume = (rev.perfume || 'Parfum').replace(/'/g, "\\'");
+      const escapedText = (rev.text || '').replace(/'/g, "\\'");
+
+      const replyHtml = rev.replyText ? `
+        <div style="background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold-primary); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; color: var(--gold-light);">
+          <strong>R├®ponse officielle :</strong> "${rev.replyText}"
+        </div>
+      ` : `<span style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">Aucune r├®ponse publi├®e</span>`;
+
+      return `
+        <tr style="border-bottom: 1px solid var(--border-dark);">
+          <td style="padding: 14px;"><strong style="color: var(--gold-light);">${rev.authorName}</strong><br/><span style="font-size: 0.8rem; color: var(--text-muted);">${rev.city || ''}</span></td>
+          <td style="padding: 14px;"><span style="color: var(--gold-primary); font-weight: 700;">${rev.perfume}</span></td>
+          <td style="padding: 14px; color: #F59E0B;">${starsHtml}</td>
+          <td style="padding: 14px; font-size: 0.88rem; max-width: 260px; line-height: 1.5; font-style: italic;">"${rev.text}"</td>
+          <td style="padding: 14px; max-width: 280px;">${replyHtml}</td>
+          <td style="padding: 14px;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn btn-gold" style="padding: 6px 12px; font-size: 0.8rem;" onclick="window.openAdminReviewReplyModal('${rev.id}', '${escapedAuthor}', '${escapedPerfume}', '${escapedText}')">
+                <i class="fas fa-reply"></i> R├®pondre / Modifier
+              </button>
+              <button class="btn btn-outline" style="padding: 6px 10px; font-size: 0.8rem; border-color: var(--accent-danger); color: var(--accent-danger);" onclick="window.deleteCustomerReview('${rev.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  let currentReplyingReviewId = null;
+  let currentReplyingAuthor = '';
+  let currentReplyingPerfume = '';
+
+  window.openAdminReviewReplyModal = function(reviewId, authorName, perfume, text) {
+    currentReplyingReviewId = reviewId;
+    currentReplyingAuthor = authorName;
+    currentReplyingPerfume = perfume;
+
+    const idInp = document.getElementById('admin-reply-review-id');
+    if (idInp) idInp.value = reviewId;
+
+    const infoElem = document.getElementById('admin-rev-dest-info');
+    if (infoElem) {
+      infoElem.innerHTML = `Avis de : <strong style="color: var(--gold-light);">${authorName}</strong> sur <strong style="color: var(--gold-primary);">${perfume}</strong>`;
+    }
+
+    const prevBox = document.getElementById('admin-rev-preview-box');
+    if (prevBox) {
+      prevBox.innerHTML = `"${text}"`;
+    }
+
+    const review = allReviews.find(r => r.id === reviewId);
+    const txtArea = document.getElementById('admin-rev-reply-textarea');
+    if (txtArea) {
+      txtArea.value = (review && review.replyText) ? review.replyText : '';
+    }
+
+    const phoneInp = document.getElementById('admin-rev-phone-input');
+    if (phoneInp) {
+      phoneInp.value = (review && review.phone) ? review.phone : '';
+    }
+
+    const selectElem = document.getElementById('admin-rev-template-select');
+    if (selectElem) selectElem.value = (review && review.replyText) ? "custom" : "1";
+
+    if (!review || !review.replyText) {
+      window.applyAdminRevTemplate("1");
+    }
+
+    openModal('admin-review-reply-modal');
+  };
+
+  window.applyAdminRevTemplate = function(templateId) {
+    const txtArea = document.getElementById('admin-rev-reply-textarea');
+    if (!txtArea) return;
+
+    const name = currentReplyingAuthor || 'Client';
+    const perfume = currentReplyingPerfume || 'parfum';
+
+    if (templateId === "1") {
+      txtArea.value = `Merci beaucoup ${name} pour votre confiance ! Nous sommes ravis que le parfum ${perfume} vous plaise et nous vous souhaitons une excellente journ├®e chez Shone Parfumerie.`;
+    } else if (templateId === "2") {
+      txtArea.value = `Un grand merci ${name} ! La tenue et l'├®l├®gance de nos parfums sont notre plus grande fiert├® chez Shone Parfumerie.`;
+    } else if (templateId === "3") {
+      txtArea.value = `Merci ${name} pour votre retour si chaleureux ! Nous restons ├á votre enti├¿re disposition pour vos prochaines commandes.`;
+    } else if (templateId === "4") {
+      txtArea.value = `Ravi(e) que la livraison rapide et la qualit├® du parfum ${perfume} vous apportent enti├¿re satisfaction ! ├Ç tr├¿s bient├┤t chez Shone Parfumerie.`;
+    }
+  };
+
+  window.saveAdminReviewReplySubmit = function(e) {
+    if (e) e.preventDefault();
+    const reviewId = document.getElementById('admin-reply-review-id').value || currentReplyingReviewId;
+    const replyText = document.getElementById('admin-rev-reply-textarea').value.trim();
+
+    if (!replyText) {
+      alert("Veuillez saisir votre r├®ponse officielle.");
+      return;
+    }
+
+    const review = allReviews.find(r => r.id === reviewId);
+    if (review) {
+      review.replyText = replyText;
+      review.replyDate = new Date().toISOString().slice(0, 10);
+      localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
+
+      renderCustomerReviews();
+      loadAdminData();
+
+      if (window.ShoneCloudSync) {
+        window.ShoneCloudSync.saveAllReviews(allReviews);
+      }
+
+      closeModal('admin-review-reply-modal');
+      alert(`Ô£ô Votre r├®ponse officielle a bien ├®t├® publi├®e sous l'avis de "${currentReplyingAuthor}" sur la boutique !`);
+    }
+  };
+
+  window.deleteCustomerReview = function(reviewId) {
+    if (confirm("Voulez-vous vraiment supprimer cet avis de la boutique ?")) {
+      allReviews = allReviews.filter(r => r.id !== reviewId);
+      localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
+      renderCustomerReviews();
+      loadAdminData();
+    }
+  };
+
+  window.saveAndSendWaReviewReply = function() {
+    const reviewId = document.getElementById('admin-reply-review-id').value || currentReplyingReviewId;
+    const replyText = document.getElementById('admin-rev-reply-textarea').value.trim();
+    let phone = document.getElementById('admin-rev-phone-input') ? document.getElementById('admin-rev-phone-input').value.trim() : '';
+
+    if (!replyText) {
+      alert("Veuillez saisir votre r├®ponse officielle.");
+      return;
+    }
+
+    if (!phone) {
+      phone = prompt(`Veuillez saisir le num├®ro WhatsApp de "${currentReplyingAuthor}" (Ex: 70000000 ou 22670000000) :`);
+      if (!phone) return;
+    }
+
+    const review = allReviews.find(r => r.id === reviewId);
+    if (review) {
+      review.replyText = replyText;
+      review.phone = phone;
+      review.replyDate = new Date().toISOString().slice(0, 10);
+      localStorage.setItem('shone_reviews', JSON.stringify(allReviews));
+
+      renderCustomerReviews();
+      loadAdminData();
+
+      if (window.ShoneCloudSync) {
+        window.ShoneCloudSync.saveAllReviews(allReviews);
+      }
+
+      closeModal('admin-review-reply-modal');
+
+      const cleanPhone = phone.replace(/\s+/g, '');
+      const fullPhone = cleanPhone.startsWith('226') || cleanPhone.startsWith('223') ? cleanPhone : `226${cleanPhone}`;
+      const waMsgText = `Bonjour ${currentReplyingAuthor} ! ­ƒæï\nMerci d'avoir laiss├® votre avis sur le parfum ${currentReplyingPerfume || ''} chez Shone Parfumerie ! Ô£¿\n\nVoici notre r├®ponse officielle :\n"${replyText}"\n\n├Ç tr├¿s bient├┤t chez Shone Parfumerie ! ­ƒÆÄ`;
+
+      window.open(`https://wa.me/${fullPhone}?text=${encodeURIComponent(waMsgText)}`, '_blank');
+    }
+  };
+
+  // --------------------------------------------------------------------------
+  // GENERAL MODAL HELPERS & LISTENERS
+  // --------------------------------------------------------------------------
+  window.openModal = function(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.add('active');
+  };
+
+  window.closeModal = function(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('active');
+  };
+
+  if (searchInput) searchInput.addEventListener('input', applyFiltersAndSort);
+  if (sortSelect) sortSelect.addEventListener('change', (e) => { currentSort = e.target.value; applyFiltersAndSort(); });
+
+  // INITIAL RUN WITH AUTOMATIC MULTI-DEVICE CLOUD SYNC
+  applyFiltersAndSort();
+  renderDeliveryZones();
+  renderCustomerReviews();
+
   if (window.ShoneCloudSync) {
     window.ShoneCloudSync.pullAllData().then(() => {
       allReviews = JSON.parse(localStorage.getItem('shone_reviews')) || defaultReviews;
       allOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
       allInboxMessages = JSON.parse(localStorage.getItem('shone_inbox')) || [];
       renderCustomerReviews();
+      if (document.getElementById('admin-view').style.display !== 'none') {
+        loadAdminData();
+      }
     });
   }
 
-  // AUTO-POLLING CLOUD SYNC EVERY 10 SECONDS
+  // AUTO-POLLING CLOUD SYNC EVERY 10 SECONDS (REALTIME FOR ADMIN)
   setInterval(() => {
     if (window.ShoneCloudSync) {
       window.ShoneCloudSync.pullAllData().then(() => {
@@ -1391,6 +1654,13 @@ document.addEventListener('DOMContentLoaded', () => {
         allOrders = JSON.parse(localStorage.getItem('shone_orders')) || [];
         allInboxMessages = JSON.parse(localStorage.getItem('shone_inbox')) || [];
         renderCustomerReviews();
+        if (document.getElementById('admin-view') && document.getElementById('admin-view').style.display !== 'none') {
+          renderAdminStats();
+          renderAdminOrdersTable(allOrders);
+          renderAdminInboxTable(allInboxMessages);
+          renderAdminProductsTable(allProducts);
+          renderAdminReviewsTable(allReviews);
+        }
       });
     }
   }, 10000);
